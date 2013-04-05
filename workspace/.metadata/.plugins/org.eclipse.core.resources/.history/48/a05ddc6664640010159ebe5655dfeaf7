@@ -1,0 +1,73 @@
+import java.io.IOException;
+import java.io.InputStream;
+
+import cs235.xml.TokenizerImpl;
+
+
+public class ParserImpl implements Parser {
+	Tokenizer t;
+	Document doc;
+	Node current;
+	/**
+	 * CONSTRUCTOR
+	 */
+	public ParserImpl(){
+		doc = new DocumentImpl();
+	}
+	/**
+     * Parses the XML document contained in the specified input stream
+     * and returns a document tree that represents the document.
+     * 
+     * @param in an input stream containing an XML document
+     * @return the root node of document tree
+     * @throws IllegalArgumentException if in is null
+     * @throws IOException if an input error occurs while parsing the XML document
+     * @throws XMLException if the XML document being parsed is not in valid XML format
+     */
+	@Override
+	public Document parse(InputStream in) throws IOException, XMLException {
+		if(in == null){
+			throw new IllegalArgumentException();
+		}
+		//Initialize stuff
+		t = (Tokenizer) new TokenizerImpl(in);
+		current = doc;
+		
+		//Start recursive calls
+		processNextToken();
+		
+		//If it reaches this point, assume that in processNextToken(),
+		//currentToken == TokenType.EOF
+		return doc;
+	}
+	public void processNextToken(){
+		TokenType currentToken = t.getTokenType();	
+		//This means it is an element, not text.
+		if(currentToken == TokenType.START_TAG){
+			element();
+		}
+		if(currentToken == TokenType.TEXT){
+			text();
+		}
+		if(currentToken == TokenType.END_TAG){
+			String endTag = t.getTagName();
+		}
+		
+	}
+	public void element(){
+		//Make an element impl with the tag name.
+		Element e = new ElementImpl(t.getTagName());
+		
+		//Add the attributes to e.
+		int numAttributes = t.getAttributeCount();
+		for(int i = 0; i < numAttributes; i++){
+			e.setAttribute(t.getAttributeName(i), t.getAttributeValue(i));
+		}
+	}
+	
+	public void text(){
+		//Make a text impl with the text.
+		Text textNode = new TextImpl(t.getText());
+	}
+
+}

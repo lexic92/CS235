@@ -1,0 +1,738 @@
+
+
+package hash;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+
+
+
+
+
+public class Test {
+
+	public static final int EIGHT = 8;
+    /**
+     * Run tests on AVL trees.
+     */
+    public static void main(String[] args){
+    	testSizeAddContainsClear();
+    	testRemove();
+    	testIterator();
+    	
+    	testMap(); //Calls a bunch of sub-methods.
+    }
+    /**
+     * good
+     * @param s
+     */
+    public static void part1(Set s){
+     
+    	
+    	System.out.println("Testing Set.contains() returns false for each item in List A: ");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, "+
+    			"enigma, alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (s.contains("fungible") ? "FAILED" : "PASSED"));
+    	System.out.println("tautology: "+ (s.contains("tautology") ? "FAILED" : "PASSED"));
+    	System.out.println("epiphany: "+ (s.contains("epiphany") ? "FAILED" : "PASSED"));
+    	part1_2(s);
+    }
+    /**
+     * good
+     * @param s
+     */
+    public static void part1_2(Set s){
+    	System.out.println("fisticuffs: "+ (s.contains("fisticuffs") ? "FAILED" : "PASSED"));
+    	System.out.println("enigma: "+ (s.contains("enigma") ? "FAILED" : "PASSED"));
+    	System.out.println("alabaster: "+ (s.contains("alabaster") ? "FAILED" : "PASSED"));
+    	System.out.println("debacle: "+ (s.contains("debacle") ? "FAILED" : "PASSED"));
+    	System.out.println("bogus: "+ (s.contains("bogus") ? "FAILED" : "PASSED"));
+    }
+    /**
+     * Good
+     * @param s
+     */
+    public static void part2(Set s){
+    	System.out.print("Testing if Set.size() returns 8: ( just added the 8 words from list A) ");
+    	System.out.println(s.size() == EIGHT ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//6. Check that 'contains' returns 'true' for each item in List A.
+    	
+    	System.out.println("Testing Set.contains() returns true for each item in List A: ");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, enigma,"+
+    			" alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (s.contains("fungible") ? "PASSED" : "FAILED"));
+    	System.out.println("tautology: "+ (s.contains("tautology") ? "PASSED" : "FAILED"));
+    	System.out.println("epiphany: "+ (s.contains("epiphany") ? "PASSED" : "FAILED"));
+    	part2_2(s);
+    }
+    /**
+     * Good
+     * @param s
+     */
+    public static void part2_2(Set s){	
+    	System.out.println("fisticuffs: "+ (s.contains("fisticuffs") ? "PASSED" : "FAILED"));
+    	System.out.println("enigma: "+ (s.contains("enigma") ? "PASSED" : "FAILED"));
+    	System.out.println("alabaster: "+ (s.contains("alabaster") ? "PASSED" : "FAILED"));
+    	System.out.println("debacle: "+ (s.contains("debacle") ? "PASSED" : "FAILED"));
+    	System.out.println("bogus: "+ (s.contains("bogus") ? "PASSED" : "FAILED"));
+    }
+    
+    public static void testSizeAddContainsClear(){
+    	//Test the 'size', 'add', 'contains', and 'clear' methods on a Set.
+    	System.out.println("\n-------------TESTING SIZE, ADD, CONTAINS,"+
+    			"AND CLEAR METHODS----------------------------\n");
+    	
+    	//1. Make a set object.
+    	Set s = Factory.createSet();
+    	
+    	//2. Check that 'size' returns 0.
+    	System.out.print("Testing Set.size() returns zero: ");
+    	System.out.println(s.size() == 0 ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//3. Check that 'contains' returns 'false' for each item in List A.
+    	part1(s);
+    	
+    	
+    	System.out.println("\n-----------------------------------------\n");
+    	
+    	//4. Call 'add' with each item in List A.
+    	s.add("fungible");
+    	s.add("tautology");
+    	s.add("epiphany");
+    	s.add("fisticuffs");
+    	
+    	s.add("enigma");
+    	s.add("alabaster");
+    	s.add("debacle");
+    	s.add("bogus");
+    	
+    	//5. Check that 'size' returns 8. -and,-
+    	//6. Check that 'contains' returns 'true' for each item in List A.
+       	part2(s);
+    	
+       	//7. Call the 'clear' method.
+    	s.clear();
+    	
+    	//8. Check that 'size' returns 0.
+     	System.out.print("\n\nTesting Set.size() returns 0: ( just called clear method) ");
+    	System.out.println(s.size() == 0 ? "PASSED" : "FAILED\n\n");
+    	
+    }
+    public static void testRemove(){
+    	//1. Make a Set object.
+    	Set s = Factory.createSet();
+    	
+    	System.out.println("\n\n------------TESTING REMOVE--------------------\n");
+    	
+    	//2. Add items in List A.
+    	s.add("fungible");s.add("tautology");s.add("epiphany");s.add("fisticuffs");
+    	s.add("enigma");s.add("alabaster");s.add("debacle");s.add("bogus");
+    	
+    	//3. Add items in List B.
+    	s.add("heresy");s.add("bombastic");s.add("sentient");s.add("blitzkrieg");
+    	s.add("infernal");s.add("euphoric");s.add("plethora");s.add("azure");
+    	
+    	removeSomeMore(s);
+    	
+    	//6. Check that 'size' returns 8.
+    	System.out.println("\n\nTesting Set.size() returns 8: ");
+    	System.out.println("(Just added 8 items from List A,\n"+
+    			"added 8 items from List B,\n"+
+    			"removed the 8 List A items,\n"+
+    			"and removed 8 non-added List C items.)\n");
+    	
+    	System.out.println(s.size() == EIGHT ? "PASSED" : "FAILED\n\n");
+    	part3(s);
+    	part4(s);
+    	
+    	part5(s);
+    	//10. Check that 'size' returns 0.
+    	System.out.println("\n\nTesting Set.size() returns 0: ");
+    	System.out.println("(Just removed 8 items from List B,\n");
+    	
+    	System.out.println(s.size() == 0 ? "PASSED" : "FAILED\n\n");
+    	
+    	part6(s);
+    	
+    }
+    
+    public static void removeSomeMore(Set s){
+    	//4. Remove items in List A.
+    	s.remove("fungible");s.remove("tautology");s.remove("epiphany");s.remove("fisticuffs");
+    	s.remove("enigma");s.remove("alabaster");s.remove("debacle");s.remove("bogus");
+    	
+    	//5. Remove items in List C.
+    	s.remove("cacophony");s.remove("lollygag");s.remove("luscious");s.remove("yurt");
+    	s.remove("macabre");s.remove("soporific");s.remove("ergo");s.remove("pedantic");
+    }
+    public static void part3(Set s){
+    	
+    	//7. Check that "contains" returns "false" for each item in List A.
+    	System.out.println("Testing Set.contains() returns FALSE for each item in "+
+    			"List A: (Look for each line to say \"PASSED\".)");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, "+
+    			"enigma, alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (s.contains("fungible") ? "FAILED" : "PASSED"));
+    	System.out.println("tautology: "+ (s.contains("tautology") ? "FAILED" : "PASSED"));
+    	System.out.println("epiphany: "+ (s.contains("epiphany") ? "FAILED" : "PASSED"));
+    	part3_2(s);
+    	
+    	
+    }
+    public static void part3_2(Set s){
+    	System.out.println("fisticuffs: "+ (s.contains("fisticuffs") ? "FAILED" : "PASSED"));
+    	System.out.println("enigma: "+ (s.contains("enigma") ? "FAILED" : "PASSED"));
+    	System.out.println("alabaster: "+ (s.contains("alabaster") ? "FAILED" : "PASSED"));
+    	System.out.println("debacle: "+ (s.contains("debacle") ? "FAILED" : "PASSED"));
+    	System.out.println("bogus: "+ (s.contains("bogus") ? "FAILED" : "PASSED"));
+    }
+    public static void part4(Set s){
+    	//8. Check that "contains" returns "true" for each item in List B.
+    	
+    	System.out.println("\n\nTesting Set.contains() returns true for each item in List B: ");
+    	System.out.println("(List B: [heresy, bombastic, sentient, blitzkrieg,"+
+    			" infernal, euphoric, plethora, azure])\n");
+    	System.out.println("heresy: "+ (s.contains("heresy") ? "PASSED" : "FAILED"));
+    	System.out.println("bombastic: "+ (s.contains("bombastic") ? "PASSED" : "FAILED"));
+    	System.out.println("sentient: "+ (s.contains("sentient") ? "PASSED" : "FAILED"));
+    	part4_2(s);
+    }
+    public static void part4_2(Set s){
+    	System.out.println("blitzkrieg: "+ (s.contains("blitzkrieg") ? "PASSED" : "FAILED"));
+    	System.out.println("infernal: "+ (s.contains("infernal") ? "PASSED" : "FAILED"));
+    	System.out.println("euphoric: "+ (s.contains("euphoric") ? "PASSED" : "FAILED"));
+    	System.out.println("plethora: "+ (s.contains("plethora") ? "PASSED" : "FAILED"));
+    	System.out.println("azure: "+ (s.contains("azure") ? "PASSED" : "FAILED"));
+    }
+    public static void part5(Set s){
+    	//9. Remove items in List B.
+    	s.remove("heresy");s.remove("bombastic");s.remove("sentient");s.remove("blitzkrieg");
+    	s.remove("infernal");s.remove("euphoric");s.remove("plethora");s.remove("azure");
+    }
+    public static void part6(Set s){
+    	//11. Check that "contains" returns "false" for each item in List B.
+    	
+    	System.out.println("\n\nTesting Set.contains() returns false for each item in List B: ");
+    	System.out.println("(List B: [heresy, bombastic, sentient, blitzkrieg,"+
+    			" infernal, euphoric, plethora, azure])\n");
+    	System.out.println("heresy: "+ (s.contains("heresy") ? "FAILED" : "PASSED"));
+    	System.out.println("bombastic: "+ (s.contains("bombastic") ? "FAILED" : "PASSED"));
+    	System.out.println("sentient: "+ (s.contains("sentient") ? "FAILED" : "PASSED"));
+    	part6_2(s);
+    }
+    public static void part6_2(Set s){
+    	System.out.println("blitzkrieg: "+ (s.contains("blitzkrieg") ? "FAILED" : "PASSED"));
+    	System.out.println("infernal: "+ (s.contains("infernal") ? "FAILED" : "PASSED"));
+    	System.out.println("euphoric: "+ (s.contains("euphoric") ? "FAILED" : "PASSED"));
+    	System.out.println("plethora: "+ (s.contains("plethora") ? "FAILED" : "PASSED"));
+    	System.out.println("azure: "+ (s.contains("azure") ? "FAILED" : "PASSED"));
+    }
+    
+    
+    
+    
+    //---------------__ITERATOR  ---------------------------------------------------
+    
+    public static void testIt1(Set s){
+    	//Add items in List A.
+    	s.add("fungible");
+    	s.add("tautology");
+    	s.add("epiphany");
+    	s.add("fisticuffs");
+    	s.add("enigma");
+    	s.add("alabaster");
+    	s.add("debacle");
+    	s.add("bogus");
+    	
+    	System.out.println("\n\nTesting s.iterator() iterates over ListA in this order: ");
+    	System.out.println("[fungible, tautology, epiphany, bogus,\n"+
+    			"enigma, fisticuffs, debacle, alabaster]\n"+
+    			"\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it = s.iterator();
+    	while(it.hasNext()){
+    		String string = (String) it.next();
+    		System.out.print(string + "\n ");
+    	}
+    	
+    }
+    public static void testIt2(Set s){
+
+    	System.out.println("\n\n--------------------------------\n");
+    	//Add items in List B.
+    	s.add("heresy");s.add("bombastic");s.add("sentient");s.add("blitzkrieg");
+    	s.add("infernal");s.add("euphoric");s.add("plethora");s.add("azure");
+    	
+    	System.out.println("\n\nJust added the items in List B.  Expected order: \n");
+    	System.out.println("[enigma, blitzkrieg, heresy, azure,\n"+
+    			"fisticuffs, euphoric, debacle, bombastic,\n"+
+    			"plethora, infernal, epiphany, bogus,\n"+
+    			" alabaster, fungible, tautology, sentient]\n\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it2 = s.iterator();
+    	while(it2.hasNext()){
+    		String string = (String) it2.next();
+    		System.out.print(string + "\n ");
+    	}
+    	
+    }
+    public static void testIt3(Set s){
+    	System.out.println("\n\n--------------------------------\n");
+    	//Remove items in List A.
+    	s.remove("fungible");s.remove("tautology");s.remove("epiphany");s.remove("fisticuffs");
+    	s.remove("enigma");s.remove("alabaster");s.remove("debacle");s.remove("bogus");
+    	
+    	System.out.println("\n\nJust removed the items in List A.  Expected order: \n");
+    	System.out.println("[blitzkrieg, heresy, azure, euphoric,\n"+
+    			"bombastic, plethora, infernal, sentient]\n\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it3 = s.iterator();
+    	while(it3.hasNext()){
+    		String string = (String) it3.next();
+    		System.out.print(string + "\n ");
+    	}
+    }
+    public static void testIt4(Set s){
+    	System.out.println("\n\n--------------------------------\n");
+    	//Add items in List C.
+    	s.add("cacophony");s.add("lollygag");s.add("luscious");s.add("yurt");
+    	s.add("macabre");s.add("soporific");s.add("ergo");s.add("pedantic");
+    	
+    	System.out.println("\n\nJust added the items in List C.  Expected order: \n");
+    	System.out.println("[blitzkrieg, lollygag, heresy, azure,\n"+
+    			"macabre, soporific, euphoric, ergo,\n"+
+    			" bombastic, plethora, infernal, cacophony,"+
+    			"yurt, luscious, pedantic, sentient]\n\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it4 = s.iterator();
+    	while(it4.hasNext()){
+    		String string = (String) it4.next();
+    		System.out.print(string + "\n ");
+    	}
+    }
+    public static void testIt5(Set s){
+    	System.out.println("\n\n--------------------------------\n");
+    	//Remove items in List B.
+    	s.remove("heresy");s.remove("bombastic");s.remove("sentient");s.remove("blitzkrieg");
+    	s.remove("infernal");s.remove("euphoric");s.remove("plethora");s.remove("azure");
+    	
+    	System.out.println("\n\nJust removed the items in List B.  Expected order: \n");
+    	System.out.println("[lollygag, macabre, soporific, ergo,\n"+
+    			"cacophony, yurt, luscious, pedantic]\n\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it5 = s.iterator();
+    	while(it5.hasNext()){
+    		String string = (String) it5.next();
+    		System.out.print(string + "\n ");
+    	}
+    }
+    public static void testIt6(Set s){
+    	System.out.println("\n\n--------------------------------\n");
+      	//Add items in List A.
+    	s.add("fungible");s.add("tautology");s.add("epiphany");s.add("fisticuffs");
+    	s.add("enigma");s.add("alabaster");s.add("debacle");s.add("bogus");
+    	
+    	System.out.println("\n\nJust added the items in List A.  Expected order: \n");
+    	System.out.println("[enigma, lollygag, macabre, fisticuffs,\n"+
+    			"soporific, debacle, ergo, epiphany,\n"+
+    			"cacophony, bogus, yurt, alabaster,\n"+
+    			"fungible, luscious, pedantic, tautology]\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it6 = s.iterator();
+    	while(it6.hasNext()){
+    		String string = (String) it6.next();
+    		System.out.print(string + "\n ");
+    	}
+    }
+    public static void testIt7(Set s){
+    	System.out.println("\n\n--------------------------------\n");
+    	//Add items in List B.
+    	s.add("heresy");s.add("bombastic");s.add("sentient");s.add("blitzkrieg");
+    	s.add("infernal");s.add("euphoric");s.add("plethora");s.add("azure");
+    	
+    	System.out.println("\n\nJust added the items in List B.  Expected order: \n");
+    	System.out.println("[enigma, lollygag, blitzkrieg, heresy,\n"+
+    			"azure, macabre, fisticuffs, soporific,\n"+
+    			"euphoric, debacle, ergo, bombastic,\n"+
+    			"plethora, epiphany, infernal, cacophony,\n"+
+    			"bogus, yurt, alabaster, fungible,\n"+
+    			"luscious, pedantic, tautology, sentient]\n\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it7 = s.iterator();
+    	while(it7.hasNext()){
+    		String string = (String) it7.next();
+    		System.out.print(string + "\n ");
+    	}
+    }
+    public static void testIt8(Set s){
+    	System.out.println("\n\n--------------------------------\n");
+    	//Remove items in List C.
+    	s.remove("cacophony");s.remove("lollygag");s.remove("luscious");s.remove("yurt");
+    	s.remove("macabre");s.remove("soporific");s.remove("ergo");s.remove("pedantic");
+    	
+    	System.out.println("\n\nJust removed the items in List C.  Expected order: \n");
+    	System.out.println("[enigma, blitzkrieg, heresy, azure,\n"+
+    			"fisticuffs, euphoric, debacle, bombastic,\n"+
+    			"plethora, epiphany, infernal, bogus,\n"+
+    			"alabaster, fungible, tautology, sentient]\n\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it8 = s.iterator();
+    	while(it8.hasNext()){
+    		String string = (String) it8.next();
+    		System.out.print(string + "\n ");
+    	}
+    	
+    }
+    public static void testIt9(Set s){
+    	System.out.println("\n\n--------------------------------\n");
+    	//Clear the set.
+    	s.clear();
+    	
+    	//Add items in List A.
+    	s.add("fungible");s.add("tautology");s.add("epiphany");s.add("fisticuffs");
+    	s.add("enigma");s.add("alabaster");s.add("debacle");s.add("bogus");
+    	
+    	System.out.println("\n\nJust cleared the set and added the items "+
+    			"in List A.  Expected order: \n");
+    	System.out.println("[fungible, tautology, epiphany, bogus,\n"+
+    			"enigma, fisticuffs, debacle, alabaster]\n\n"+
+    			"MAKE SURE IT'S THE SAME AS THE FOLLOWING:");
+    	
+    	//Print out each element in the order that the iterator iterates.
+    	Iterator it9 = s.iterator();
+    	while(it9.hasNext()){
+    		String string = (String) it9.next();
+    		System.out.print(string + "\n ");
+    	}
+    	
+    }
+    
+    public static void testIterator(){
+    	System.out.println("\n\n------------TESTING ITERATOR--------------------\n");
+    	
+    	Set s = Factory.createSet();
+    	
+    	testIt1(s);
+    	testIt2(s);
+    	testIt3(s);
+    	testIt4(s);
+    	testIt5(s);
+    	testIt6(s);
+    	testIt7(s);
+    	testIt8(s);
+    	testIt9(s);
+    	
+    }
+    
+    public static void testMap(){
+    	testSizePutGetClear();
+    	testMapRemove();
+    }
+    
+    public static void testSizePutGetClear(){
+    	//Test the 'size', 'Put', 'Get', and 'clear' methods on a Map.
+    	System.out.println("\n-------------TESTING MAP"+
+		"----------------------\n");
+    	System.out.println("\n-------------TESTING SIZE, PUT, GET,"+
+    			"AND CLEAR METHODS----------------------------\n");
+    	
+    	//1. Make a 'Map' object. .
+    	Map m = Factory.createMap();
+
+    	
+    	//2. Check that 'size' returns 0.
+    	System.out.print("Testing Map.size() returns zero: ");
+    	System.out.println(m.size() == 0 ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//3. Check that 'get' returns 'null' for each item in List A.
+    	mapPart1(m);
+    	
+    	//4. Call 'put' with each item in List A as the key and the corresponding 
+    	//item in List B as the value. 
+    	mapPart2(m);
+    	
+    	//5. Check that 'size' returns 8.
+    	System.out.println("\n\nTesting Map.size() returns 8: ");
+    	System.out.println("(Just put 8 items with each item in " +
+    		"List A as the key and the \ncorresponding item in" +
+    		" List B as the value.)\n");
+    	
+    	System.out.println(m.size() == EIGHT ? "PASSED\n\n" : "FAILED\n\n");
+    
+    	//6. Check that 'get' returns the correct item in List B 
+    	//for each item in List A. 
+    	mapPart3(m);
+    	
+    	//7. Check that 'get' returns 'null' for each item in List B. 
+    	mapPart4(m);
+    	
+    	//8. Call the 'clear' method.
+    	m.clear();
+    	
+    	//5. Check that 'size' returns 0.
+    	System.out.println("\n\nTesting Map.size() returns 0: ");
+    	System.out.println("(Just called 'clear'.)\n");
+    	
+    	System.out.println(m.size() == 0 ? "PASSED\n\n" : "FAILED\n\n");
+    }
+    /**
+     * good
+     * @param s
+     */
+    public static void mapPart1(Map m){
+     
+    	
+    	System.out.println("Testing Map.get() returns null for each item in List A: ");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, "+
+    			"enigma, alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (m.get("fungible")== null ? "PASSED" : "FAILED"));
+    	System.out.println("tautology: "+ (m.get("tautology") == null ? "PASSED" : "FAILED"));
+    	System.out.println("epiphany: "+ (m.get("epiphany") == null ? "PASSED" : "FAILED"));
+    	mapPart1_2(m);
+    }
+    public static void mapPart1_2(Map m){
+    	System.out.println("fisticuffs: "+ (m.get("fisticuffs")== null ? "PASSED" : "FAILED"));
+    	System.out.println("enigma: "+ (m.get("enigma") == null ? "PASSED" : "FAILED"));
+    	System.out.println("alabaster: "+ (m.get("alabaster") == null ? "PASSED" : "FAILED"));
+    	System.out.println("debacle: "+ (m.get("debacle") == null ? "PASSED" : "FAILED"));
+    	System.out.println("bogus: "+ (m.get("bogus") == null ? "PASSED" : "FAILED"));
+    }
+    public static void mapPart2(Map m){
+    	m.put("fungible", "heresy");
+    	m.put("tautology", "bombastic");
+    	m.put("epiphany", "sentient");
+    	m.put("fisticuffs", "blitzkrieg");
+    	
+    	m.put("enigma", "infernal");
+    	m.put("alabaster", "euphoric");
+    	m.put("debacle", "plethora");
+    	m.put("bogus", "azure");
+    }
+    public static void mapPart3(Map m){
+    	System.out.println("KEY- fungible gets accurate value: " + 
+    		(m.get("fungible").equals("heresy") ? "PASSED" : "FAILED"));
+    	
+    	System.out.println("KEY- tautology gets accurate value: " + 
+    			(m.get("tautology").equals("bombastic") ? "PASSED" : "FAILED"));
+    	
+    	System.out.println("KEY- epiphany gets accurate value: " + 
+    			(m.get("epiphany").equals("sentient") ? "PASSED" : "FAILED"));
+    	
+    	System.out.println("KEY- fisticuffs gets accurate value: " + 
+    			(m.get("fisticuffs").equals("blitzkrieg") ? "PASSED" : "FAILED"));
+    	mapPart3_2(m);
+    }
+   public static void mapPart3_2(Map m){
+	   
+    	System.out.println("KEY- enigma gets accurate value: " + 
+    			(m.get("enigma").equals("infernal") ? "PASSED" : "FAILED"));
+    	
+    	System.out.println("KEY- alabaster gets accurate value: " + 
+    			(m.get("alabaster").equals("euphoric") ? "PASSED" : "FAILED"));
+    	
+    	System.out.println("KEY- debacle gets accurate value: " + 
+    			(m.get("debacle").equals("plethora") ? "PASSED" : "FAILED"));
+    	
+    	System.out.println("KEY- bogus gets accurate value: " + 
+    			(m.get("bogus").equals("azure") ? "PASSED\n\n" : "FAILED\n\n"));
+    	
+    }
+    public static void mapPart4(Map m){
+    	System.out.println("Testing Map.get() returns null for each item in List B: ");
+    	System.out.println("(List B: [See somewhere above])\n");
+    	System.out.println("heresy: "+ (m.get("heresy")== null ? "PASSED" : "FAILED"));
+    	System.out.println("bombastic: "+ (m.get("bombastic") == null ? "PASSED" : "FAILED"));
+    	System.out.println("sentient: "+ (m.get("sentient") == null ? "PASSED" : "FAILED"));
+    	mapPart4_2(m);
+    }
+    public static void mapPart4_2(Map m){
+    	System.out.println("blitzkrieg: "+ (m.get("blitzkrieg")== null ? "PASSED" : "FAILED"));
+    	System.out.println("infernal: "+ (m.get("infernal") == null ? "PASSED" : "FAILED"));
+    	System.out.println("euphoric: "+ (m.get("euphoric") == null ? "PASSED" : "FAILED"));
+    	System.out.println("plethora: "+ (m.get("plethora") == null ? "PASSED" : "FAILED"));
+    	System.out.println("azure: "+ (m.get("azure") == null ? "PASSED" : "FAILED"));
+    }
+    
+    public static void testMapRemove(){
+    	//1. Make a 'Map' object.
+    	Map m = Factory.createMap();
+	
+    	System.out.println("\n\n------------TESTING REMOVE--------------------\n");
+    	
+    	//2. Call 'put' with each item in List A as the key and the corresponding
+    	//item in List C as the value.
+    	mapRemove1(m);
+    	
+    	//3. Call 'put' with each item in List B as the key and the corresponding
+    	//item in List C as the value. 
+    	mapRemove2(m);
+    	
+    	//4. Call 'remove' with each item in List A. 
+    	mapRemove3(m);
+    	
+    	//5. Call 'remove' with each item in List C. 
+    	mapRemove4(m);
+    	
+    	//6. Check that 'size' returns 8.
+    	System.out.println("\n\nTesting Map.size() returns 8: ");
+    	System.out.println("(Just put pairs (List A, List C) and (List B, List C.)\n"+
+    			"Called remove(List A) and remove(List C).");
+    	
+    	System.out.println(m.size() == EIGHT ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//7. Check that 'get' returns 'null' for each item in List A. 
+     	mapRemove5(m);
+    	
+    	//8. Check that 'get' returns the correct item in List C for each item in List B. 
+    	mapRemove6(m);
+    	
+    	//9. Call 'remove' with each item in List B.
+    	mapRemove7(m);
+    	
+    	//10. Check that 'size' returns 0. 
+    	System.out.println("\n\nTesting Map.size() returns 0: ");
+    	System.out.println("(Just removed each item in List B.)");
+    	
+    	System.out.println(m.size() == 0 ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//11. Check that 'get' returns 'null' for each item in List B. 
+    	mapRemove8(m);
+    }
+    public static void mapRemove1(Map m){
+    	//2. Call 'put' with each item in List A as the key and the corresponding
+    	//item in List C as the value.
+    	m.put("fungible", "cacophony");
+    	m.put("tautology", "lollygag");
+    	m.put("epiphany", "luscious");
+    	m.put("fisticuffs", "yurt");
+    	
+    	m.put("enigma", "macabre");
+    	m.put("alabaster", "soporific");
+    	m.put("debacle", "ergo");
+    	m.put("bogus", "pedantic");
+    }
+    public static void mapRemove2(Map m){
+    	//3. Call 'put' with each item in List B as the key and the corresponding
+    	//item in List C as the value. 
+       	m.put("heresy", "cacophony");
+    	m.put("bombastic", "lollygag");
+    	m.put("sentient", "luscious");
+    	m.put("blitzkrieg", "yurt");
+    	
+    	m.put("infernal", "macabre");
+    	m.put("euphoric", "soporific");
+    	m.put("plethora", "ergo");
+    	m.put("azure", "pedantic");
+    }
+    public static void mapRemove3(Map m){
+    	//4. Call 'remove' with each item in List A. 
+       	m.remove("fungible");
+       	m.remove("tautology");
+       	m.remove("epiphany");
+       	m.remove("fisticuffs");
+       	
+       	m.remove("enigma");
+       	m.remove("alabaster");
+       	m.remove("debacle");
+       	m.remove("bogus");
+    }
+    public static void mapRemove4(Map m){
+    	//5. Call 'remove' with each item in List C. 
+       	m.remove("cacophony");
+       	m.remove("lollygag");
+       	m.remove("luscious");
+       	m.remove("yurt");
+       	
+       	m.remove("macabre");
+       	m.remove("soporific");
+       	m.remove("ergo");
+       	m.remove("pedantic");
+    }
+  public static void mapRemove5(Map m){
+	//7. Check that 'get' returns 'null' for each item in List A
+    	System.out.println("Testing Map.get() returns null for each item in List A: ");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, "+
+    			"enigma, alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (m.get("fungible") == null ? "PASSED" : "FAILED"));
+    	System.out.println("tautology: "+ (m.get("tautology") == null ? "PASSED" : "FAILED"));
+    	System.out.println("epiphany: "+ (m.get("epiphany") == null ? "PASSED" : "FAILED"));
+    	mapRemove5_2(m);
+    }
+    public static void mapRemove5_2(Map m){
+    	System.out.println("fisticuffs: "+ (m.get("fisticuffs")== null ? "PASSED" : "FAILED"));
+    	System.out.println("enigma: "+ (m.get("enigma") == null ? "PASSED" : "FAILED"));
+    	System.out.println("alabaster: "+ (m.get("alabaster") == null ? "PASSED" : "FAILED"));
+    	System.out.println("debacle: "+ (m.get("debacle") == null ? "PASSED" : "FAILED"));
+    	System.out.println("bogus: "+ (m.get("bogus") == null ? "PASSED\n\n" : "FAILED\n\n"));
+    }
+    public static void mapRemove6(Map m){
+    	//8. Check that 'get' returns the correct item in List C for each item in List B. 
+    	System.out.println("Testing Map.get() returns the correct item in List C "+
+    			"for each item in List B: ");
+    	System.out.println("(List B: [See somewhere above])");
+    	System.out.println("(List C: [cacophony, lollygag, luscious, yurt,"+
+    			"macabre, soporific, ergo, pedantic]\n");
+
+    	System.out.println("heresy: "+ (m.get("heresy")== "cacophony" ? "PASSED" : "FAILED"));
+    	System.out.println("bombastic: "+ (m.get("bombastic") == "lollygag" ? "PASSED" : "FAILED"));
+    	System.out.println("sentient: "+ (m.get("sentient") == "luscious" ? "PASSED" : "FAILED"));
+    	mapRemove6_2(m);
+    }
+    public static void mapRemove6_2(Map m){
+    	System.out.println("blitzkrieg: "+ (m.get("blitzkrieg")== "yurt" ? "PASSED" : "FAILED"));
+    	System.out.println("infernal: "+ (m.get("infernal") == "macabre" ? "PASSED" : "FAILED"));
+    	System.out.println("euphoric: "+ (m.get("euphoric") == "soporific" ? "PASSED" : "FAILED"));
+    	System.out.println("plethora: "+ (m.get("plethora") == "ergo" ? "PASSED" : "FAILED"));
+    	System.out.println("azure: "+ (m.get("azure") == "pedantic" ? "PASSED" : "FAILED"));
+    }
+    public static void mapRemove7(Map m){
+    	//9. Call 'remove' with each item in List B.
+       	m.remove("heresy");
+       	m.remove("bombastic");
+       	m.remove("sentient");
+       	m.remove("blitzkrieg");
+       	
+       	m.remove("infernal");
+       	m.remove("euphoric");
+       	m.remove("plethora");
+       	m.remove("azure");
+    }
+    public static void mapRemove8(Map m){
+    	//11. Check that 'get' returns 'null' for each item in List B. 
+	    System.out.println("Testing Map.get() returns null for each item in List B: ");
+		System.out.println("(List B: [heresy, bombastic, sentient, blitzkrieg, "+
+				"infernal, euphoric, plethora, azure])\n");
+		System.out.println("heresy: "+ (m.get("heresy")== null ? "PASSED" : "FAILED"));
+		System.out.println("bombastic: "+ (m.get("bombastic") == null ? "PASSED" : "FAILED"));
+		System.out.println("sentient: "+ (m.get("sentient") == null ? "PASSED" : "FAILED"));
+		mapRemove8_2(m);
+	}
+	public static void mapRemove8_2(Map m){
+		System.out.println("blitzkrieg: "+ (m.get("blitzkrieg")== null ? "PASSED" : "FAILED"));
+		System.out.println("infernal: "+ (m.get("infernal") == null ? "PASSED" : "FAILED"));
+		System.out.println("euphoric: "+ (m.get("euphoric") == null ? "PASSED" : "FAILED"));
+		System.out.println("plethora: "+ (m.get("plethora") == null ? "PASSED" : "FAILED"));
+		System.out.println("azure: "+ (m.get("azure") == null ? "PASSED" : "FAILED"));
+	}
+}
+
+

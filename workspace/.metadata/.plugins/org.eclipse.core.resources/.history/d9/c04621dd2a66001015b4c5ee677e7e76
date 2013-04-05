@@ -1,0 +1,38 @@
+
+
+
+
+public class test {
+	
+	
+	
+	
+	public static void main(String[] args){
+		
+		String[] stringArray = {"b","e","d","a","c"};
+		System.out.println(stringArray);
+		
+		insertionSort(stringArray);
+		
+		System.out.print("\n"+stringArray);
+		
+		
+	}
+	
+	
+	
+	
+	public static void insertionSort(String[] a){
+		
+		for(int p = 1; p < a.length; p++){
+			
+			String tmp = a[p];
+			int j = p;
+			
+			for( ; j > 0 && tmp.compareTo(a[j - 1]) < 0; j--){
+				a[j] = a[j-1];
+				a[j] = tmp;
+			}
+		}
+	}
+}

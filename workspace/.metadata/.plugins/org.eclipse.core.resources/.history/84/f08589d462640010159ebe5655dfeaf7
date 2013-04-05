@@ -1,0 +1,32 @@
+import java.io.IOException;
+import java.io.InputStream;
+
+
+public class ParserImpl implements Parser {
+	/**
+     * Parses the XML document contained in the specified input stream
+     * and returns a document tree that represents the document.
+     * 
+     * @param in an input stream containing an XML document
+     * @return the root node of document tree
+     * @throws IllegalArgumentException if in is null
+     * @throws IOException if an input error occurs while parsing the XML document
+     * @throws XMLException if the XML document being parsed is not in valid XML format
+     */
+	@Override
+	public Document parse(InputStream in) throws IOException, XMLException {
+		if(in == null){
+			throw new IllegalArgumentException();
+		}
+		
+		Tokenizer t = new TokenizerImpl(in);
+		Node current;
+		TokenType currentToken = t.getTokenType();
+		
+		
+		
+		
+		return null;
+	}
+
+}

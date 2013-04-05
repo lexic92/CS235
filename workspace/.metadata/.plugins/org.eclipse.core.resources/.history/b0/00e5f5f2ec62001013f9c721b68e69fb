@@ -1,0 +1,192 @@
+import java.util.ArrayList;
+
+import java.util.Iterator;
+
+
+public class ElementImpl implements Element{
+	String tagName;
+	ArrayList<Attribute> attributeArray;
+	/**
+	 * COMPLETED
+	 */
+	public ElementImpl(String tagName){
+		this.tagName = tagName;
+		attributeArray = new ArrayList<Attribute>();
+	}
+	
+	/**
+	 * COMPLETED
+	 * 
+     * @return the name of this element
+     */
+	@Override
+	public String getTagName() {
+		return tagName;
+	}
+	
+	 /**
+	 * COMPLETED
+     * Sets the name of this element.
+     * 
+     * @param the new name of the element
+     * @throws IllegalArgumentException if tagName is null
+     */
+	@Override
+	public void setTagName(String tagName) {
+		if(tagName == null){
+			throw new IllegalArgumentException();
+		}
+		this.tagName = tagName;
+	}
+	 
+	/**
+	 * COMPLETED
+	 * 
+     * Returns the value of the specified attribute.
+     * 
+     * @param name the name of the attribute whose value is being requested
+     * @return the value of the specified attribute, or null if the element
+     *          has no attribute with that name
+     * @throws IllegalArgumentException if name is null
+     */
+	@Override
+	public String getAttributeValue(String name) {
+		if(name == null){
+			throw new IllegalArgumentException();
+		}
+		Iterator<Attribute> it = attributeArray.iterator();
+		for(Attribute e : attributeArray){
+			if(e.getName().equals(name)){
+				return e.getValue();
+			}
+		}
+		return null;
+	}
+	/**
+	 * COMPLETED
+	 * 
+     * Sets the value of the specified attribute on this element.
+     * 
+     * @param name the name of the attribute that is being set
+     * @param value the value of the attribute that is being set
+     * @throws IllegalArgumentException if name is null
+     * @throws IllegalArgumentException if value is null
+     */
+	@Override
+	public void setAttribute(String name, String value) {
+		if(name == null || value == null){
+			throw new IllegalArgumentException();
+		}
+		attributeArray.add(new Attribute(name, value));
+	}
+	 /**
+	  * COMPLETED
+	  * 
+     * @return the number of attributes that this element has
+     */
+	@Override
+	public int getAttributeCount() {
+		// TODO Auto-generated method stub
+		return attributeArray.size();
+	}
+    /**
+     * COMPLETED
+     * 
+     * Returns the name of the ith attribute (indices start at 0)
+     * 
+     * @param i the index of the attribute whose name is being requested
+     * @return the name of the ith attribute (indices start at 0)
+     * @throws IllegalArgumentException if i is an invalid index
+     */
+	@Override
+	public String getAttributeName(int i) {
+		if(i < 0 || i >= attributeArray.size()){
+			throw new IllegalArgumentException();
+		}
+		return attributeArray.get(i).getName();
+	}
+
+	/**
+     * Returns the value of the ith attribute (indices start at 0)
+     * 
+     * @param i the index of the attribute whose value is being requested
+     * @return the value of the ith attribute (indices start at 0)
+     * @throws IllegalArgumentException if i is an invalid index
+     */
+	@Override
+	public String getAttributeValue(int i) {
+		if(i < 0 || i >= attributeArray.size()){
+			throw new IllegalArgumentException();
+		}
+		return attributeArray.get(i).getValue();
+	}
+	
+	@Override
+	public NodeType getType() {
+		// TODO Auto-generated method stub
+		return NodeType.ELEMENT_NODE;
+	}
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public Node getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getFirstChild() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getLastChild() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getNextSibling() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getPrevSibling() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void appendChild(Node newChild) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertChild(Node newChild, Node child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChild(Node child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void replaceChild(Node newChild, Node oldChild) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+}

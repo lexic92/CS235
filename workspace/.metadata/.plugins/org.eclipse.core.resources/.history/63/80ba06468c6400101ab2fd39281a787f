@@ -1,0 +1,235 @@
+package cs235.xml;
+
+
+
+
+
+public class NodeImpl implements Node {
+	private Node parent;
+	private Node nextSibling;
+	private Node prevSibling;
+	private Node firstChild;
+	private Node lastChild;
+	
+	
+	public NodeImpl(){
+		parent = null;
+		nextSibling = null;
+		prevSibling = null;
+	}
+	
+	/**
+	 * COMPLETED
+     * @return the type of this node (DOCUMENT_NODE, ELEMENT_NODE, or TEXT_NODE)
+     */
+	@Override
+	public NodeType getType() {
+		if (this instanceof DocumentImpl){
+			return NodeType.DOCUMENT_NODE;
+		}
+		else if (this instanceof ElementImpl){
+			return NodeType.ELEMENT_NODE;
+		}
+		else {
+			return NodeType.TEXT_NODE;
+		}
+	}
+	/**
+	 * COMPLETED
+     * @return the parent node of this node, or null if it has no parent
+     */
+	@Override
+	public Node getParent() {
+		return parent == null ? null : parent;
+	}
+
+	@Override
+	/**
+	 * COMPLETED
+     * @return the first child of this node, or null if it has no children
+     */
+	public Node getFirstChild() {
+		return 	firstChild;
+	}
+	/**
+	 * COMPLETED
+     * @return the last child of this node, or null if it has no children
+     */
+	@Override
+	public Node getLastChild() {
+		return lastChild;
+	}
+	/**
+	 * COMPLETED
+	 * 
+     * @return the next sibling of this node, or null if it has no next sibling
+     */
+	@Override
+	public Node getNextSibling() {
+		return nextSibling == null ? null : nextSibling;
+	}
+	/**
+	 * COMPLETED
+	 * 
+     * @return the previous sibling of this node, or null if it has no previous sibling
+     */
+	@Override
+	public Node getPrevSibling() {
+		return prevSibling == null ? null : prevSibling;
+	}
+	 /**
+	  * COMPLETED (hopefully it works.)
+     * Appends a child to the target node's list of children.
+     * 
+     * @param newChild the new child node to be appended
+     * @throws IllegalArgumentException if newChild is null
+     */
+	@Override
+	public void appendChild(Node newChild) {
+		if(newChild == null){
+			throw new IllegalArgumentException();
+		}
+		if(lastChild != null){
+			//Add it on the end of the list (by making the last child point to it).
+			((NodeImpl) lastChild).setNextSibling(newChild);
+			
+			//Update newChild's pointers (but leave Next sibling null since it is the last sibling)
+			((NodeImpl) newChild).setPrevSibling(lastChild);
+		}
+		else{
+			//Add it on the beginning of the list by making the first child pointer point to it.
+			firstChild = newChild;
+		}
+		
+		//Set parent
+		((NodeImpl) newChild).setParent(this);
+		
+		//It is now the new last child. (In both cases, since it was appended.)
+		lastChild = newChild;
+		
+	}
+	/**
+	 * COMPLETED (I think)
+	 * 
+     * Inserts a new child node before (in front of) an existing child node.
+     * 
+     * @param newChild the new child node to be inserted
+     * @param child the child node which the new node should be inserted before it.
+     * @throws IllegalArgumentException if newChild is null
+     * @throws IllegalArgumentException if child is null
+     * @throws IllegalArgumentException if child is not a child of the target node
+     */
+	@Override
+	public void insertChild(Node newChild, Node child) {
+		if(newChild == null || child == null || child.getParent() != this){
+			throw new IllegalArgumentException();
+		}
+		//NOTE:  This is the order!  e, e, e, __, child, e, e, e,...  Insert in the blank!
+		
+		if(child == firstChild){
+			//  NEWCHILD --- CHILD
+			//  FIRSTCHLD --- CHILD
+			//  null <    < >
+			//    
+			
+			firstChild = newChild;
+			((NodeImpl) firstChild).setNextSibling(child);
+			((NodeImpl) firstChild).setPrevSibling(null);
+			((NodeImpl) firstChild).setPrevSibling(null); //It may have had a prev sibling, so 
+			//it needs to be overwritten.
+			((NodeImpl) child).setPrevSibling(firstChild);
+			
+		}
+		else{
+			// -CHILDS_PREVIOUS_CHILD ----  NEWCHILD ---- CHILD ----
+			//                        < >              <>
+			//newNode.prev = current; (current is child's prev sibling, in this case.)
+			((NodeImpl)newChild).setPrevSibling(child.getPrevSibling());
+			
+			//newNode.next = current.next;
+			((NodeImpl)newChild).setNextSibling(child);
+			
+			//newNode.prev.next (AKA current.next) = newNode;
+			((NodeImpl)child.getPrevSibling()).setNextSibling(newChild);
+			
+			//newNode.next.prev = newNode;
+			((NodeImpl) child).setPrevSibling(newChild);
+			
+		}
+		
+		
+		//Set parent
+		((NodeImpl)newChild).setParent(this);
+		
+	
+	}
+	 /**
+	  * COMPLETED (I think.)
+	  * 
+     * Removes a child from the target node's list of children.
+     * 
+     * @param child the child to be removed
+     * @throws IllegalArgumentException if child is null
+     * @throws IllegalArgumentException if child is not a child of the target node
+     */
+	@Override
+	public void removeChild(Node child) {
+		//If it's removing the first child, then update firstChild pointer and make the new
+		//first child not have a previous sibling.
+		if(firstChild == child){
+			firstChild = child.getNextSibling();
+			((NodeImpl)firstChild).setPrevSibling(null);
+		}
+		else{
+			//child.prev.next = child.next;
+			((NodeImpl)child.getPrevSibling()).setNextSibling(child.getNextSibling());
+			
+			//child.next.prev = child.prev;
+			((NodeImpl)child.getNextSibling()).setPrevSibling(child.getPrevSibling());
+		}
+	}
+	/**
+	 * COMPLETED
+     * Replaces an existing child node with a new node.
+     * 
+     * @param newChild the new node that is replacing the old node
+     * @param oldChild the old node that is being replaced
+     * @throws IllegalArgumentException if newChild is null
+     * @throws IllegalArgumentException if oldChild is null
+     * @throws IllegalArgumentException if oldChild is not a child of the target node
+     */
+	@Override
+	public void replaceChild(Node newChild, Node oldChild) {
+		if(newChild == null || oldChild == null  || oldChild.getParent() != this){
+			throw new IllegalArgumentException();
+		}
+		
+		Node childAfterOldChild = oldChild.getNextSibling();
+		removeChild(oldChild);
+		insertChild(newChild, childAfterOldChild);
+	}
+	/**
+	 * COMPLETED
+	 * One I made
+	 * @param newNextSibling
+	 */
+	public void setNextSibling(Node newNextSibling){
+		nextSibling = newNextSibling;
+	}
+	/**
+	 * COMPLETED
+	 * One I made
+	 * @param newNextSibling
+	 */
+	public void setPrevSibling(Node newPrevSibling){
+		prevSibling = newPrevSibling;
+	}
+	/**
+	 * COMPLETED
+	 * One I made
+	 * @param newNextSibling
+	 */
+	public void setParent(Node newParent){
+		parent = newParent;
+	}
+}

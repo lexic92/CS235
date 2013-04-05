@@ -1,0 +1,13 @@
+package cs235.xml;
+
+public class DocumentImpl extends NodeImpl implements Document {
+
+	/**
+	 * COMPLETED
+	 * Added this on my own because DOCUMENT_NODE exists,
+	 * so it must be important.
+	 */
+	public NodeType getType() {
+		return NodeType.DOCUMENT_NODE;
+	}
+}

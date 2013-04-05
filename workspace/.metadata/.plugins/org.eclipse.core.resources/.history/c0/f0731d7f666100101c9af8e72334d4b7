@@ -1,0 +1,395 @@
+package hash;
+
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+import java.util.Queue;
+
+
+
+public class SetImpl implements java.util.Set {
+	private int numElements;
+	private int hash_table_array_size;
+	private LinkedList[] array;
+	private int loadFactor; // "N/T"  N: numElements. T: hash_table_array_size.
+
+	/**
+	 * Constructor. Initial hash table size is 1, and the
+	 * rest of the info is set relative to that (and relative
+	 * to this set being empty).
+	 */
+	SetImpl(){
+		
+		numElements = 0;
+		hash_table_array_size = 1;
+		array = new LinkedList[1]; //"2. Initial size of hash table must be 1."
+		array[0] = new LinkedList<Object>();
+		loadFactor = 0;
+		
+	}
+	
+	
+	/**  
+	 * COMPLETED
+	 * 
+	 * Insert e.
+	 *
+	 * @return true if this set did not already contain the specified element.
+	 */
+	@Override
+	public boolean add(Object e) {
+		//If the object is null (and this set doesn't take nulls), throw exception.
+		if(e == null){
+			throw new NullPointerException();
+		}
+		//If the class of e prevents it from being added to this set, throw exception.
+		if(!(e instanceof Object)){  //Change to whatever class you want later on
+			throw new ClassCastException();
+		}
+		//If this element is already present, return false.
+		if(this.contains(e)){
+			return false;
+		}
+
+		//----------THE SPECIFIC "ADD" IMPLEMENTATION BEGINS HERE------------------------
+		
+		//If the size has reached the maximum, then leave it alone (don't want it to accidentally
+		//go to Zero or something!)
+		if(!(numElements == Integer.MAX_VALUE)){
+			numElements++;
+		}
+		
+		//Update load factor (BASED ON NEW NUMBER OF ELEMENTS)
+		loadFactor = numElements/hash_table_array_size;
+		
+		
+		//If the added item caused the load factor to exceed 1.0, (AKA then rehash into a new hash table
+		//of array size 1 * old_hash_table_array_size + 1.
+		if(loadFactor > 1){
+			reHash();
+		}
+		
+		
+		//Now, add it to the table (whether it was rehashed or not).
+		addElementToIndex(e);
+	
+		return true;
+	}
+	private void addElementToIndex(Object e){
+		int index =  myHashCode(e); //Compute valid hash code.
+			//System.out.println(index);
+			//System.out.println(array[index]);
+		array[index].add(e); //Add the object to the end of the LinkedList at this hash code index.
+	}
+	/**
+	 * COMPLETED
+	 * 
+	 * 
+	 */
+	private void reHash(){
+		int old_table_size = hash_table_array_size; //Save old table size;
+		
+		//Update array_size while I still have access to the "old" table size.
+		hash_table_array_size = 2 * old_table_size + 1;
+		
+		//1. Save reference to array
+		LinkedList[] original = array; 
+		
+		 //2. Have array reference more memory.
+		array = new LinkedList[hash_table_array_size];
+		
+		//2.1 Don't forget! Initialize each element of this array with an empty linked list!!!
+		for(int i = 0; i < hash_table_array_size; i++){
+			array[i] = new LinkedList<Object>();
+		}
+		
+		//3. Copy the old data over.
+		for(int i = 0; i < old_table_size; i++){
+			for(Object e : original[i]){ //for each object in the linked list at index "i"...
+				addElementToIndex(e); //Add it to "array" (Which is a new size now).
+			}
+		}	
+		
+		//4.Unreference original array.
+		original = null;
+		
+		//Update load factor again (in case it's used in other methods).
+		loadFactor = numElements/hash_table_array_size;
+	}
+	
+	/**
+	 * COMPLETED
+	 * @param e the object to get the hash code for
+	 * @return the hash code
+	 */
+	private int myHashCode(Object e){
+		return Math.abs(e.hashCode() % hash_table_array_size);
+	}
+	
+	
+	
+	
+	/**
+	 * COMPLETE (MAY BE MESSED UP THOUGH)
+	 * 
+	 * Returns true if this set contains the object. 
+	 * More formally, returns true if and only if this set
+	 * contains an element e such that (o == null ? e==null : o.equals(e)).
+	 * 
+	 * @param o the tested object (to see if it's contained)
+	 * @return true if this set contains "o"
+	 */
+	@Override
+	public boolean contains(Object o) {
+		int index = myHashCode(o);
+		for(Object e : array[index]){
+			if(e.equals(o)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
+
+
+
+	/**
+	 * COMPLETED
+	 * 
+	 * Returns the number of elements
+	 * in this set.
+	 * If this set contains more than Integer.MAX_VALUE elements,
+	 * returns Integer.MAX_VALUE.
+	 */
+	@Override
+	public int size() {
+		//Integer.MAX_VALUE thing is taken care of in "add" method.
+		return numElements;
+	}
+
+
+
+
+
+
+
+
+
+
+	/**
+	 * COMPLETED
+	 * 
+	 * Removes all of the elements from this set.
+	 */
+	@Override
+	public void clear() {
+		//The exact same as the constructor.
+		numElements = 0;
+		hash_table_array_size = 1;
+		array = new LinkedList[1]; //"2. Initial size of hash table must be 1."
+		loadFactor = 0;
+		
+	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * COMPLETED
+	 * but very whimsical
+	 */
+	@Override
+	public boolean remove(Object o) {
+		// This is basically the exact same as "contains" but with an extra detail.
+		int index = myHashCode(o);
+		for(Object e : array[index]){
+			if(e.equals(o)){
+				array[index].remove(o); //ADDED LINE OF CODE.
+				numElements--; //Don't forget to decrease the number of elements!
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	/**
+	 * COMPLETED
+	 */
+	@Override
+	public Iterator iterator() {
+		return new myIterator();
+	}
+
+	
+	
+	
+	
+	
+
+	@Override
+	public boolean containsAll(Collection c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object[] toArray() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object[] toArray(Object[] a) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean addAll(Collection c) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean retainAll(Collection c) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean removeAll(Collection c) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * This inner class iterates over the hash table that was
+	 * used to get a pointer to this iterator.
+	 * @author lexic92
+	 *
+	 */
+	//Inner class
+	private class myIterator implements java.util.Iterator{
+		private boolean illegalState;
+		private boolean empty;
+		private int tableIndex;
+		private int elementIndex;
+		private int linkedListIndex;
+		private Object justSawThisObject;
+		
+		/**
+		 * Constructs a simple iterator that goes through the items
+		 * in each bucket of the hash table.
+		 */
+		myIterator(){
+			illegalState = true;
+			tableIndex = 0;
+			elementIndex = 0;
+			
+			//Note whether there are more elements. 
+			//** numElements comes from the outer class.
+			if(numElements > 0){
+				empty = false;
+			}
+			else{
+				empty = true;
+			}
+		}
+		
+		
+		/**
+		 * COMPLETED
+		 * Returns the next element in the iteration.
+		 * 
+		 * @return the next element in the iteration.
+		 * @throws NoSuchElementException Iteration has no more elements.
+		 */
+		public Object next(){
+			if(empty){
+				throw new NoSuchElementException();
+			}
+			//Reaching this point guarantees that there is an element left.
+			
+			//If the linked list at this bucket is empty, then look at the next bucket.
+			while(array[tableIndex].size() == 0){
+				tableIndex++;
+			}
+			
+			//Now, the table index should be pointing to a bucket that has the next element.
+			LinkedList l = array[tableIndex];
+			
+			//If this is the last item in that list, then go to the next bucket,
+			//starting with index 0.
+			if(linkedListIndex == l.size()){
+				linkedListIndex = 0;
+				tableIndex++;
+				return next(); //Recursively return another one.
+			}
+			else{ //if this isn't the end of the linked list, then go to the next linked list index.
+				justSawThisObject = l.get(linkedListIndex);
+				linkedListIndex++;
+			}
+			illegalState = false; //"Remove" can be called now.
+			elementIndex++; //Since it advanced past this element, increase the element index.
+			return justSawThisObject;
+		}
+		/**
+		 * 
+		 * COMPLETED
+		 * 
+		 * Returns true if the iteration has more elements.
+		 *  (In other words, returns true if next would 
+		 *  return an element rather than throwing an exception.) 
+		 *  
+		 * @return true if the iterator has more elements.
+		 */
+		public boolean hasNext(){
+			//It has another element if the index is at that element 
+			//right now, or if it is less than that element.
+			return elementIndex < numElements;
+		}
+		
+		/**
+		 * COMPLETED
+		 * 
+		 * Removes from the underlying collection the last element
+		 * returned by the iterator (optional operation). 
+		 * This method can be called only once per call to next.
+		 * The behavior of an iterator is unspecified if the 
+		 * underlying collection is modified while the iteration
+		 * is in progress in any way other than by calling this method. 
+		 *  
+		 *  @throws IllegalStateException if the next method has not yet been
+		 *   called, or the remove method has already been called after the
+		 *   last call to the next method.
+		 */
+		
+		@Override
+		public void remove() {
+			// TODO Auto-generated method stub
+			if(illegalState){
+				 throw new IllegalStateException();
+			}
+			SetImpl.this.remove(justSawThisObject);
+			illegalState = true;
+		}
+	
+	}
+
+}

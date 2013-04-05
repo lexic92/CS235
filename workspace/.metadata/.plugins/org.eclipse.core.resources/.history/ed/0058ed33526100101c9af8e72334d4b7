@@ -1,0 +1,121 @@
+
+
+package hash;
+
+import java.util.Set;
+
+
+
+public class Test {
+
+	public static final int EIGHT = 8;
+    /**
+     * Run tests on AVL trees.
+     */
+    public static void main(String[] args) {
+    	testSizeAddContainsClear();
+    	//testRemove();
+    	//testIterator();
+    }
+    /**
+     * good
+     * @param s
+     */
+    public static void part1(Set s){
+     
+    	
+    	System.out.println("Testing Set.contains() returns false for each item in List A: ");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, "+
+    			"enigma, alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (s.contains("fungible") ? "FAILED" : "PASSED"));
+    	System.out.println("tautology: "+ (s.contains("tautology") ? "FAILED" : "PASSED"));
+    	System.out.println("epiphany: "+ (s.contains("epiphany") ? "FAILED" : "PASSED"));
+    	part1_2(s);
+    }
+    /**
+     * good
+     * @param s
+     */
+    public static void part1_2(Set s){
+    	System.out.println("fisticuffs: "+ (s.contains("fisticuffs") ? "FAILED" : "PASSED"));
+    	System.out.println("enigma: "+ (s.contains("enigma") ? "FAILED" : "PASSED"));
+    	System.out.println("alabaster: "+ (s.contains("alabaster") ? "FAILED" : "PASSED"));
+    	System.out.println("debacle: "+ (s.contains("debacle") ? "FAILED" : "PASSED"));
+    	System.out.println("bogus: "+ (s.contains("bogus") ? "FAILED" : "PASSED"));
+    }
+    /**
+     * Good
+     * @param s
+     */
+    public static void part2(Set s){
+    	System.out.print("Testing if Set.size() returns 8: ( just added the 8 words from list A) ");
+    	System.out.println(s.size() == EIGHT ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//6. Check that 'contains' returns 'true' for each item in List A.
+    	
+    	System.out.println("Testing Set.contains() returns true for each item in List A: ");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, enigma,"+
+    			" alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (s.contains("fungible") ? "PASSED" : "FAILED"));
+    	System.out.println("tautology: "+ (s.contains("tautology") ? "PASSED" : "FAILED"));
+    	System.out.println("epiphany: "+ (s.contains("epiphany") ? "PASSED" : "FAILED"));
+    	part2_2(s);
+    }
+    /**
+     * Good
+     * @param s
+     */
+    public static void part2_2(Set s){	
+    	System.out.println("fisticuffs: "+ (s.contains("fisticuffs") ? "PASSED" : "FAILED"));
+    	System.out.println("enigma: "+ (s.contains("enigma") ? "PASSED" : "FAILED"));
+    	System.out.println("alabaster: "+ (s.contains("alabaster") ? "PASSED" : "FAILED"));
+    	System.out.println("debacle: "+ (s.contains("debacle") ? "PASSED" : "FAILED"));
+    	System.out.println("bogus: "+ (s.contains("bogus") ? "PASSED" : "FAILED"));
+    }
+    
+    public static void testSizeAddContainsClear(){
+    	//Test the 'size', 'add', 'contains', and 'clear' methods on a Set.
+    	System.out.println("\n-------------TESTING SIZE, ADD, CONTAINS,"+
+    			"AND CLEAR METHODS----------------------------\n");
+    	
+    	//1. Make a set object.
+    	Set s = Factory.createSet();
+    	
+    	//2. Check that 'size' returns 0.
+    	System.out.print("Testing Set.size() returns zero: ");
+    	System.out.println(s.size() == 0 ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//3. Check that 'contains' returns 'false' for each item in List A.
+    	part1(s);
+    	
+    	
+    	System.out.println("\n-----------------------------------------\n");
+    	
+    	//4. Call 'add' with each item in List A.
+    	s.add("fungible");
+    	s.add("tautology");
+    	s.add("epiphany");
+    	s.add("fisticuffs");
+    	
+    	s.add("enigma");
+    	s.add("alabaster");
+    	s.add("debacle");
+    	s.add("bogus");
+    	
+    	//5. Check that 'size' returns 8. -and,-
+    	//6. Check that 'contains' returns 'true' for each item in List A.
+       	part2(s);
+    	
+       	//7. Call the 'clear' method.
+    	s.clear();
+    	
+    	//8. Check that 'size' returns 0.
+     	System.out.print("\n\nTesting Set.size() returns 0: ( just called clear method) ");
+    	System.out.println(s.size() == 0 ? "PASSED" : "FAILED\n\n");
+    	
+    }
+
+
+}
+
+

@@ -1,0 +1,289 @@
+
+
+package cs235.java;
+
+
+public class Test {
+
+    /**
+     * Run tests on Student and Employee objects
+     */
+	private static final int ELEMENTS_IN_PEOPLE_ARRAY = 3;
+	private static final double HIGHER_THAN_FOUR = 4.1;
+	private static final double LESS_THAN_ZERO = -1;
+	private static Student student1;
+	
+	
+    public static void main(String[] args) {
+
+	/*--------------------------------------------------------------------------------------
+	Test Factory.java's methods.
+	Expected Results in Terminal:
+	student
+	100
+	Bob
+	Math
+	2.0	
+
+	Sucessfully returned a Student.
+	Illegal Argument.
+	Illegal Argument.
+	Illegal Argument.
+	Illegal Argument.
+	Illegal Argument.
+	bob2011
+	Illegal Argument.
+	Joe
+	Illegal Argument.
+	English
+	Illegal Argument.
+	1.0
+	Illegal Argument.
+	Illegal Argument.
+	employee
+	200
+	Sam
+	Room 1
+
+	Successfully returned an Employee.
+	Illegal Argument.
+	Illegal Argument.
+	Illegal Argument.
+	Room 2
+	Illegal Argument.
+	Equals Method worked.
+	Equals method worked (supposed to fail here).
+	CompareTo returns 0 when equal- check.
+	CompareTo returns -1 when it is before the parameter- check.
+	CompareTo returns 1 when it is after the parameter- check.
+	Successfully saved.
+	File was not found.
+	Illegal Argument.
+	student
+	12345
+	Bob
+	Computer Science
+	3.5
+	
+	employee
+	243462
+	Sam
+	Room 1149
+
+	student
+	567354
+	Freddie
+	Piano
+	3.9
+
+
+	Illegal Argument.
+	File Not Found.
+	--------------------------------------------------------------------------------------*/
+
+	testStudentPart1();
+	testStudentPart2();
+	testStudentPart3();
+	testEmployee();
+	testEqualsAndCompareTo();
+	testPersonIOSave();
+	testPersonIOLoad();
+    }
+    public static void testStudentPart1(){
+		//Test Factory.createStudent method 
+		student1 = Factory.createStudent("100","Bob","Math",2.0);
+	
+		//Test StudentImpl toString method.
+		System.out.println(student1);
+
+		//Expect "Successfully returned a Student."	
+		System.out.println((student1 instanceof Student) ? "Sucessfully returned a Student." 
+		: "Failed to return a Student.");
+
+		//Test Factory.createStudent's Illegal Argument Exceptions
+		//5 expected Illegal Argument exceptions because...
+		try{Factory.createStudent(null,"Bob","Math",2.0);}  //id is null.
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+
+		try{Factory.createStudent("bob123","Bob","Math",HIGHER_THAN_FOUR);} //The gpa is > 4.0.
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+	
+		try{Factory.createStudent("bob123","Bob","Math",LESS_THAN_ZERO);} //The gpa is < 0.0
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+
+		try{Factory.createStudent("100",null,"Math",2.0);} //name is null.
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+	
+		try{Factory.createStudent("100","Bob",null,2.0);} // major is null.
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+    }
+    public static void testStudentPart2(){
+		//---------------------getID / setID----------------------------------------------------
+		//Test setID with valid id.
+		student1.setID("bob2011");
+	
+		//Test getID. Expect "bob2011".
+		System.out.println(student1.getID());
+
+		//Test setID's Illegal Argument Exception.	
+		//Expect "Illegal Argument."
+		try{student1.setID(null);} //id is null, should throw error.
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+
+		//---------------------getName / setName------------------------------------------------
+		//Test setName with valid name.
+		student1.setName("Joe");
+	
+		//Test getName. Expect "Joe".
+		System.out.println(student1.getName());
+
+		//Test setName's Illegal Argument Exception.	
+		//Expect "Illegal Argument."
+		try{student1.setName(null);} //name is null, should throw error.
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+
+    }
+    public static void testStudentPart3(){
+	
+		//---------------------getMajor / setMajor---------------------------------------------
+
+		//Test setMajor with valid major.
+		student1.setMajor("English");
+	
+		//Test getMajor. Expect "English".
+		System.out.println(student1.getMajor());
+
+		//Test setMajor's Illegal Argument Exception.	
+		//Expect "Illegal Argument."
+		try{student1.setMajor(null);} //name is null, should throw error.
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+
+		//---------------------getGPA / setGPA------------------------------------------------
+		//Test setGPA with valid major.
+		student1.setGPA(1.0);
+
+		//Test getGPA. Expect "1.0".
+		System.out.println(student1.getGPA());
+
+		//Test setGPA's Illegal Argument Exception.	
+		//Expect 2 "Illegal Argument."s.
+		try{student1.setGPA(LESS_THAN_ZERO);} //less than zero
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+		try{student1.setGPA(HIGHER_THAN_FOUR);} //more than 4
+		catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+    }
+    public static void testEmployee(){
+	//Test Factory.createEmployee method with valid parameters
+	Employee employee1 = Factory.createEmployee("200","Sam","Room 1"); //Should compile.
+
+	//Test EmployeeImpl toString method.
+	System.out.println(employee1);
+
+	//Expect "Successfully returned an Employee."
+	System.out.println((employee1 instanceof Employee) ? "Sucessfully returned an Employee." 
+	: "Failed to return an Employee.");
+
+	//Test Factory.createEmployee's Illegal Argument exceptions
+	//3 expected Illegal Argument exceptions because...
+	try{Factory.createEmployee(null,"Sam","Room 1");} //id is null
+	catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+
+	try{Factory.createEmployee("200",null,"Room 1");}  //name is null
+	catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+
+	try{Factory.createEmployee("200","Sam",null);} //office is null
+	catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+
+	//---------------------getOffice / setOffice---------------------------------------
+	
+	//Test setOffice with valid office.
+	employee1.setOffice("Room 2");
+	
+	//Test getOffice. Expect "Room 2".
+	System.out.println(employee1.getOffice());
+
+	//Test setOffice's Illegal Argument Exception.	
+	//Expect "Illegal Argument."
+	try{employee1.setOffice(null);} //office is null, should throw error.
+	catch(IllegalArgumentException e){ System.out.println("Illegal Argument.");}
+    }
+    public static void testEqualsAndCompareTo(){
+	//Test PersonImpl's equals method.
+	PersonImpl p1 = new PersonImpl("ID","name1");
+	PersonImpl p2 = new PersonImpl("ID","name2");
+	if(p1.equals(p2)){
+		System.out.println("Equals Method worked.");
+	}
+
+	//Test that it doesn't work when ids are different.
+	PersonImpl p3 = new PersonImpl("DIFFERENTID","name3");
+	if(p3.equals(p2)){
+	}
+	else{
+		System.out.println("Equals method worked (supposed to fail here).");
+	}
+
+	//Test PersonImpl's compareTo method
+	PersonImpl personA = new PersonImpl("a","name");
+	PersonImpl personB = new PersonImpl("b","name");
+	PersonImpl personA2 = new PersonImpl("a","name");
+	
+	if(personA.compareTo(personA2) == 0){
+		System.out.println("CompareTo returns 0 when equal- check.");
+	}
+	if(personA.compareTo(personB) == -1){
+		System.out.println("CompareTo returns -1 when it is before the parameter- check.");
+	}
+	if(personB.compareTo(personA) == 1){
+		System.out.println("CompareTo returns 1 when it is after the parameter- check.");
+	}
+    }
+    public static void testPersonIOSave(){
+	//Test PersonIO
+
+
+	//Test save method
+
+	int numberOfPeople = ELEMENTS_IN_PEOPLE_ARRAY;
+	Person[] people = new Person[ELEMENTS_IN_PEOPLE_ARRAY];
+	people[0] = new StudentImpl("ID","NAME","MAJOR",2.0);
+	people[1] = new EmployeeImpl("ID2","NAME2","OFFICE");
+	people[2] = new StudentImpl("ID3","NAME3","MAJOR2",2.0);
+
+	if(PersonIO.save(people, "output.txt")){
+		System.out.println("Successfully saved."); //Expect the toString method 
+		//results for all three of those Person objects in the file "output.txt".
+	}
+
+	//Test the PersonIO save method's catch FileNotFoundException block.
+	if(!(PersonIO.save(people, ""))){
+		System.out.println("File was not found."); //Expect "File was not found."
+	}
+	
+
+	//1 expected Illegal Argument Exception because null parameters.
+	try{PersonIO.save(null,null);}
+	catch(IllegalArgumentException e){System.out.println("Illegal Argument.");}
+    }
+    public static void testPersonIOLoad(){
+	//Test load method
+
+	Person[] loadedPeople = PersonIO.load("input.txt");
+	
+	for(Person p : loadedPeople){
+		System.out.println(p + "\n"); //Expect the toString method results for all 
+		//three of these person objects in the terminal.
+	}
+	
+	//1 expected Illegal Argument Exception because of null parameter.
+	try{PersonIO.load(null);}
+	catch(IllegalArgumentException e){System.out.println("Illegal Argument.");}
+
+	//Test the PersonIO load method's catch FileNotFoundException block.
+	if(PersonIO.load("") == null){
+		System.out.println("File Not Found.");
+	}
+    }
+}
+
+

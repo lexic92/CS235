@@ -1,0 +1,361 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+
+
+//package cs235.xml;
+
+
+public class Test {
+	private static Element e;
+	private static Text t;
+	private static Element e2;
+	private static Node middle;
+    /**
+     * Run tests on Text, Element, Document, Printer, and Parser objects.
+     * @throws FileNotFoundException 
+     */
+    public static void main(String[] args) throws FileNotFoundException {
+    	testTextInterface();
+    	testElementInterface();
+    	testAppendChildInNodeInterface();
+    	testInsertChildInNodeInterface();
+    	testRemoveChildInNodeInterface();
+    	testReplaceChildInNodeInterface();
+    	testPrintInPrinterInterface();
+    	testParseInParserInterface();
+    }
+    public static void testTextInterface(){
+    	//Test the 'Text' interface.
+    	System.out.println("\n-------------TESTING 'TEXT' INTERFACE-----------------\n");
+    	
+    	//1. Make a Text object.
+    	Text t = Factory.createText("the string of text");
+    	
+    	//2. Check that 'getType' and 'getText' return the correct values.
+    	System.out.println("Testing if TextImpl.getType() returns TokenType.TEXT_NODE:");
+    	System.out.println(t.getType() == NodeType.TEXT_NODE ? "PASSED\n\n" : "FAILED\n\n");	
+
+    	System.out.println("Testing if TextImpl.getText() returns the correct "+
+    			"text it was initialized with: ");
+    	System.out.println(t.getText().equals("the string of text") ? "PASSED\n\n" : "FAILED\n\n");	
+    	
+    	
+    	//3. Call 'setText' to change the data in the object.
+    	t.setText("Different text");
+    	
+    	//4. Check that 'getText' returns the correct value.
+    	System.out.println("Testing if TextImpl.getText() returns the correct "+
+		"text \n(Just called TextImpl.setText() with different text):");
+    	System.out.println(t.getText().equals("Different text")? "PASSED\n\n" : "FAILED\n\n");	
+
+    	
+    }
+    public static void testElementInterface(){
+    	//1. Make an 'Element' object.
+    	Element e = Factory.createElement("The tag name");
+    	
+    	//2. Check that 'getType' and 'getTagName' return the correct values.
+    	System.out.println("Testing if ElementImpl.getType() returns TokenType.ELEMENT_NODE:");
+    	System.out.println(e.getType() == NodeType.ELEMENT_NODE ? "PASSED\n\n" : "FAILED\n\n");	
+
+    	System.out.println("Testing if ElementImpl.getTagName() returns the correct "+
+    			"tag name it was initialized with: ");
+    	System.out.println(e.getTagName().equals("The tag name")? "PASSED\n\n" : "FAILED\n\n");	
+    	
+    	
+    	//3. Call 'setTagName' and 'setAttribute' to change the data in the object. 
+    	e.setTagName("New tag name");
+    	e.setAttribute("Attribute name", "Attribute value");
+    	
+    	//4. Check that 'getTagName', 'getAttributeCount', 'getAttributeValue', and
+    	//'getAttributeName' return the correct values.
+    	System.out.println("\n\n\n--- Just called ElementImpl.setTagName() and ElementImpl."+
+    			"setAttribute() ---\n");
+    	
+    	//getTagName
+    	System.out.println("Testing if ElementImpl.getTagName() returns the correct "+
+		"tag name it was changed to: ");
+    	System.out.println(e.getTagName().equals("New tag name")? "PASSED\n\n" : "FAILED\n\n");	
+
+    	//getAttributeCount = 1?
+    	System.out.println("Check that ElementImpl.getAttributeCount() returns 1 "+
+		"(since it just added an attribute): ");
+    	System.out.println(e.getAttributeCount() == 1 ? "PASSED\n\n" : "FAILED\n\n");	
+
+    	//getAttributeValue(string)
+    	System.out.println("Check that ElementImpl.getAttributeValue(\"Attribute name\") "+
+    			"returns the correct value:");
+    	System.out.println(e.getAttributeValue("Attribute name").equals("Attribute value") ? 
+    			"PASSED\n\n" : "FAILED\n\n");	
+    	
+    	//getAttributeValue(int)
+    	System.out.println("Check that ElementImpl.getAttributeValue(\"index [an int]\") "+
+		"returns the correct value:");
+    	System.out.println(e.getAttributeValue(0).equals("Attribute value") ? 
+    			"PASSED\n\n" : "FAILED\n\n");	
+
+    	//getAttributeName(int)
+    	System.out.println("Check that ElementImpl.getAttributeName(\"index [an int]\") "+
+		"returns the correct attribute name:");
+    	System.out.println(e.getAttributeName(0).equals("Attribute name") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+
+    }
+    public static void testAppendChildInNodeInterface(){
+    	// 1. Build a small tree out of 'Element' and 'Text' objects. Make an
+    	// 'Element' object to serve as the parent. Make 2 or 3 'Text' and 
+    	// 'Element' objects to serve as children. Call 'appendChild' to connect
+    	// each child to the parent. 
+    	
+    	 e = Factory.createElement("parent");
+    	 t = Factory.createText("text");
+    	 e2 = Factory.createElement("child");
+    	
+    	e.appendChild(t);
+    	e.appendChild(e2);
+    	
+    	// 2. Call 'getParent', 'getFirstChild', 'getLastChild', 'getNextSibling',
+    	// and 'getPrevSibling' on each node in the tree to check that the nodes
+    	// in the tree are connected to each other correctly. 
+    	
+    	System.out.println("\n\n\n---------------TESTING APPEND CHILD----------------: ");
+    	System.out.println("Appended text (tchild) and element (echild) nodes "+ 
+    			"to an element parent.\n");
+    	testTree1();
+    }
+    public static void testTree1(){
+    	System.out.println("Testing tchild.getParent():");
+    	System.out.println(((Element)t.getParent()).getTagName().equals("parent") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing echild.getParent():");    
+    	System.out.println(((Element)e2.getParent()).getTagName().equals("parent") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing parent.getFirstChild():");
+    	System.out.println(((Text) e.getFirstChild()).getText().equals("text") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing parent.getLastChild():");
+    	System.out.println(((Element) e.getLastChild()).getTagName().equals("child") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing tchild.getNextSibling():");
+    	System.out.println(((Element) t.getNextSibling()).getTagName().equals("child") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing echild.getPreviousSibling():");
+    	System.out.println(((Text) e2.getPrevSibling()).getText().equals("text") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    }
+    public static void testInsertChildInNodeInterface(){
+    	//Parent: e (tagname: "parent")		//NEW TREE AFTER INSERT:
+    	//Child 1: t (text: "text").				parent
+    	//Child 2: e2 (tagname: "child")	     t  middle	e2
+    	
+    	//1. Build a small tree out of 'Element' and 'Text' objects. //Not applicable.
+    	
+    	//2. Make an additional child node. Call 'insertChild' to add the new child 
+    	//in the middle of the existing children.
+    	
+    	middle = new TextImpl("middle");
+    	
+    	e.insertChild(middle, e2);
+    	
+    	//3. Call 'getParent', 'getFirstChild', 'getLastChild', 'getNextSibling', 
+    	//and 'getPrevSibling' on each node in the tree to check that the nodes 
+    	//in the tree are connected to each other correctly.
+    	
+    	System.out.println("\n\n\n---------------TESTING INSERT CHILD----------------: ");
+    	System.out.println("Using same tree (in which I appended text (tchild) and "+
+    			"element (echild) nodes to an element parent.\n I also inserted "+
+    			"middleChild (a text node) in the middle.");
+    	
+    	
+    	//Test each child's parent
+    	System.out.println("Testing tchild.getParent(): (expected: parent)");
+    	System.out.println(((Element)t.getParent()).getTagName().equals("parent") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing echild.getParent(): (expected: parent)");    
+    	System.out.println(((Element)e2.getParent()).getTagName().equals("parent") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing middle.getParent(): (expected: parent)");    
+    	System.out.println(((Element)middle.getParent()).getTagName().equals("parent") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	
+    	//Test parent's first and last children (should be the same as before)
+    	System.out.println("Testing parent.getFirstChild(): (expected: tchild)");
+    	System.out.println(((Text) e.getFirstChild()).getText().equals("text") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing parent.getLastChild(): (expected: echild");
+    	System.out.println(((Element) e.getLastChild()).getTagName().equals("child") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	
+    	//Test sibling links --- "next" links:
+    	System.out.println("Testing tchild.getNextSibling(): (expected: middle)");
+    	System.out.println(((Text) t.getNextSibling()).getText().equals("middle") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing middle.getNextSibling(): (expected: echild)");
+    	System.out.println(((Element) middle.getNextSibling()).getTagName().equals("child") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing echild.getNextSibling(): (expected: null)");
+    	System.out.println(e2.getNextSibling() == null ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	//Test sibling links --- "previous" links:
+    	System.out.println("Testing echild.getPreviousSibling(): (expected: middle)");
+    	System.out.println(((Text) e2.getPrevSibling()).getText().equals("middle") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing middle.getPreviousSibling(): (expected: tchild)");
+    	System.out.println(((Text) middle.getPrevSibling()).getText().equals("text") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing tchild.getPreviousSibling(): (expected: head node)");
+    	System.out.println(((Text) t.getPrevSibling()).getText().equals("head") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    }
+    public static void testRemoveChildInNodeInterface(){
+    	//Parent: e (tagname: "parent")		//TREE IT'S BASED OFF OF:    //TREE AFTER REMOVE:
+    	//Child 1: t (text: "text").				parent					parent
+    	//Child 2: middle (text: "middle")	     t  middle	e2				t  e2
+    	//Child 3: e2 (tagname: "child")
+    
+    	System.out.println("\n\n\n---------------TESTING REMOVE CHILD----------------: ");
+    	System.out.println("Using same tree (in which I appended text (tchild),\n"+
+    			"element (echild), & middle nodes to an element parent.\n");
+    	
+    	e.removeChild(middle);
+    	System.out.println("Just removed 'middle.' Testing (with previously-used tests) to " +
+    			"verify that\n it's back the way it was: ");
+    	testTree1();
+    }
+    public static void testReplaceChildInNodeInterface(){
+    	//Parent: e (tagname: "parent")		//TREE IT'S BASED OFF OF:
+    	//Child 1: t (text: "text").				parent
+    	//Child 2: e2 (tagname: "child")	     	t 	e2
+    	
+    	System.out.println("\n\n\n---------------TESTING REPLACE CHILD----------------: ");
+    	System.out.println("TREE BEING TESTED:\nParent: parent\nChild 1:" +
+    			" tchild\nChild 2: echild\n\n");
+    	
+    	Node newChild = new TextImpl("New");
+    	e.replaceChild(newChild, t);
+    	
+    	System.out.println("Just replaced tchild with newChild.\n");
+    	
+    	System.out.println("Testing newChild.getParent():");
+    	System.out.println(((Element)newChild.getParent()).getTagName().equals("parent") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	
+    	System.out.println("Testing parent.getFirstChild():");
+    	System.out.println(((Text) e.getFirstChild()).getText().equals("New") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	
+    	System.out.println("Testing newChild.getNextSibling():");
+    	System.out.println(((Element) newChild.getNextSibling()).getTagName().equals("child") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	System.out.println("Testing newChild.getPreviousSibling():");
+    	System.out.println(((Text) newChild.getPrevSibling()).getText().equals("head") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    }
+    public static void testPrintInPrinterInterface() throws FileNotFoundException{
+    	//1. Make a 'Printer' object. 
+    	Printer p = Factory.createPrinter();
+    	
+    	//2. Build a document tree using the following code gotten off of the cs235 website:
+    	 Document doc = Factory.createDocument();
+		   Element student = Factory.createElement("student");
+		   student.setAttribute("id", "123456789");
+		   student.setAttribute("gpa", "3.56");
+		   student.setAttribute("phone", "(801)375-1234");
+		   doc.appendChild(student);
+		   student.appendChild(Factory.createText("\n    "));
+		   Element name = Factory.createElement("name");
+		   name.appendChild(Factory.createText("Bill White"));
+		   student.appendChild(name);
+		   student.appendChild(Factory.createText("\n    "));
+		   Element address = Factory.createElement("address");
+		   address.appendChild(Factory.createText("300 West 721 North Provo, UT 84604"));
+		   student.appendChild(address);
+		   student.appendChild(Factory.createText("\n    "));
+		   Element major = Factory.createElement("major");
+		   major.appendChild(Factory.createText("Computer Science"));
+		   student.appendChild(major);
+		   student.appendChild(Factory.createText("\n"));
+		
+		   //3. Call the 'print' method on the 'Printer' object and pass it the document
+		   //tree from step 2. 
+		   String fileName = "output.txt";
+		   PrintStream out = new PrintStream(fileName);
+		   p.print(doc, out);
+		   
+		   //4. Check that the output matches the following XML document. 
+		   System.out.println("\n\n\n---------------TESTING PRINT (IN PRINTER INTERFACE)----" +
+		   		"------------: ");
+		   
+		   System.out.println("Check that output.txt matches the following XML document:\n");
+		   System.out.print("<student id=\"123456789\" gpa=\"3.56\" phone=\"(801)375-1234\">" +
+		   					"\n    <name>Bill White</name>" +
+		   					"\n    <address>300 West 721 North Provo, UT 84604</address>" +
+		   					"\n    <major>Computer Science</major>" +
+		   					"\n</student>");
+		   
+    }
+    public static void testParseInParserInterface() throws FileNotFoundException{
+    	//1. Create a text file that contains the same XML document. (it's the same as
+    	//testPrintInPrinterInterface()'s, so I'll just use output.txt.)
+    	
+    	//2. Make a 'java.io.FileInputStream' to read from the file you created. 
+    	InputStream in = new FileInputStream("output.txt");
+    	
+    	//3. Make a 'Parser' object.
+    	Parser p = Factory.createParser();
+    	
+    	//4. Call the 'parse' method on the 'Parser' object and pass it the 'InputStream' from step 2.
+    	
+    	Document doc = null;
+    	try {doc = p.parse(in);} 
+    	catch (IOException e) {} 
+		catch (XMLException e) {}
+		
+		try {in.close();} 
+		catch (IOException e) {}
+    	
+    	//5. Check that the document tree returned from 'parse' contains
+    	//the correct 'Element' and 'Text' nodes. The contents of the tree
+    	//can be printed using a simple recursive traversal.
+    	
+		//Print the parsed document.
+		Printer printer = Factory.createPrinter();
+		String fileName = "parsed.txt";
+		PrintStream out = new PrintStream(fileName);
+		printer.print(doc, out);
+		
+		System.out.println("\n\n\n---------------TESTING PARSE (IN PARSER INTERFACE)----" +
+   		"------------: ");
+   
+		System.out.println("Check that parsed.txt matches the following XML document:\n");
+		System.out.print("<student id=\"123456789\" gpa=\"3.56\" phone=\"(801)375-1234\">" +
+					"\n    <name>Bill White</name>" +
+   					"\n    <address>300 West 721 North Provo, UT 84604</address>" +
+   					"\n    <major>Computer Science</major>" +
+   					"\n</student>");
+    }
+}
+
+

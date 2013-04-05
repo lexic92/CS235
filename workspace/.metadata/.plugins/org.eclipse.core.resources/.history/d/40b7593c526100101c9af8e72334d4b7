@@ -1,0 +1,230 @@
+
+
+package hash;
+
+import java.util.Set;
+
+import cs235.avl.SetFactory;
+
+
+
+public class Test {
+
+	public static final int EIGHT = 8;
+    /**
+     * Run tests on AVL trees.
+     */
+    public static void main(String[] args) {
+    	testSizeAddContainsClear();
+    	testRemove();
+    	//testIterator();
+    }
+    /**
+     * good
+     * @param s
+     */
+    public static void part1(Set s){
+     
+    	
+    	System.out.println("Testing Set.contains() returns false for each item in List A: ");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, "+
+    			"enigma, alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (s.contains("fungible") ? "FAILED" : "PASSED"));
+    	System.out.println("tautology: "+ (s.contains("tautology") ? "FAILED" : "PASSED"));
+    	System.out.println("epiphany: "+ (s.contains("epiphany") ? "FAILED" : "PASSED"));
+    	part1_2(s);
+    }
+    /**
+     * good
+     * @param s
+     */
+    public static void part1_2(Set s){
+    	System.out.println("fisticuffs: "+ (s.contains("fisticuffs") ? "FAILED" : "PASSED"));
+    	System.out.println("enigma: "+ (s.contains("enigma") ? "FAILED" : "PASSED"));
+    	System.out.println("alabaster: "+ (s.contains("alabaster") ? "FAILED" : "PASSED"));
+    	System.out.println("debacle: "+ (s.contains("debacle") ? "FAILED" : "PASSED"));
+    	System.out.println("bogus: "+ (s.contains("bogus") ? "FAILED" : "PASSED"));
+    }
+    /**
+     * Good
+     * @param s
+     */
+    public static void part2(Set s){
+    	System.out.print("Testing if Set.size() returns 8: ( just added the 8 words from list A) ");
+    	System.out.println(s.size() == EIGHT ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//6. Check that 'contains' returns 'true' for each item in List A.
+    	
+    	System.out.println("Testing Set.contains() returns true for each item in List A: ");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, enigma,"+
+    			" alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (s.contains("fungible") ? "PASSED" : "FAILED"));
+    	System.out.println("tautology: "+ (s.contains("tautology") ? "PASSED" : "FAILED"));
+    	System.out.println("epiphany: "+ (s.contains("epiphany") ? "PASSED" : "FAILED"));
+    	part2_2(s);
+    }
+    /**
+     * Good
+     * @param s
+     */
+    public static void part2_2(Set s){	
+    	System.out.println("fisticuffs: "+ (s.contains("fisticuffs") ? "PASSED" : "FAILED"));
+    	System.out.println("enigma: "+ (s.contains("enigma") ? "PASSED" : "FAILED"));
+    	System.out.println("alabaster: "+ (s.contains("alabaster") ? "PASSED" : "FAILED"));
+    	System.out.println("debacle: "+ (s.contains("debacle") ? "PASSED" : "FAILED"));
+    	System.out.println("bogus: "+ (s.contains("bogus") ? "PASSED" : "FAILED"));
+    }
+    
+    public static void testSizeAddContainsClear(){
+    	//Test the 'size', 'add', 'contains', and 'clear' methods on a Set.
+    	System.out.println("\n-------------TESTING SIZE, ADD, CONTAINS,"+
+    			"AND CLEAR METHODS----------------------------\n");
+    	
+    	//1. Make a set object.
+    	Set s = Factory.createSet();
+    	
+    	//2. Check that 'size' returns 0.
+    	System.out.print("Testing Set.size() returns zero: ");
+    	System.out.println(s.size() == 0 ? "PASSED\n\n" : "FAILED\n\n");
+    	
+    	//3. Check that 'contains' returns 'false' for each item in List A.
+    	part1(s);
+    	
+    	
+    	System.out.println("\n-----------------------------------------\n");
+    	
+    	//4. Call 'add' with each item in List A.
+    	s.add("fungible");
+    	s.add("tautology");
+    	s.add("epiphany");
+    	s.add("fisticuffs");
+    	
+    	s.add("enigma");
+    	s.add("alabaster");
+    	s.add("debacle");
+    	s.add("bogus");
+    	
+    	//5. Check that 'size' returns 8. -and,-
+    	//6. Check that 'contains' returns 'true' for each item in List A.
+       	part2(s);
+    	
+       	//7. Call the 'clear' method.
+    	s.clear();
+    	
+    	//8. Check that 'size' returns 0.
+     	System.out.print("\n\nTesting Set.size() returns 0: ( just called clear method) ");
+    	System.out.println(s.size() == 0 ? "PASSED" : "FAILED\n\n");
+    	
+    }
+    public static void testRemove(){
+    	//1. Make a Set object.
+    	Set s = Factory.createSet();
+    	
+    	System.out.println("\n\n------------TESTING REMOVE--------------------\n");
+    	
+    	//2. Add items in List A.
+    	s.add("fungible");s.add("tautology");s.add("epiphany");s.add("fisticuffs");
+    	s.add("enigma");s.add("alabaster");s.add("debacle");s.add("bogus");
+    	
+    	//3. Add items in List B.
+    	s.add("heresy");s.add("bombastic");s.add("sentient");s.add("blitzkrieg");
+    	s.add("infernal");s.add("euphoric");s.add("plethora");s.add("azure");
+    	
+    	removeSomeMore(s);
+    	
+    	//6. Check that 'size' returns 8.
+    	System.out.println("\n\nTesting Set.size() returns 8: ");
+    	System.out.println("(Just added 8 items from List A,\n"+
+    			"added 8 items from List B,\n"+
+    			"removed the 8 List A items,\n"+
+    			"and removed 8 non-added List C items.)\n");
+    	
+    	System.out.println(s.size() == EIGHT ? "PASSED" : "FAILED\n\n");
+    	part3(s);
+    	part4(s);
+    	
+    	part5(s);
+    	//10. Check that 'size' returns 0.
+    	System.out.println("\n\nTesting Set.size() returns 0: ");
+    	System.out.println("(Just removed 8 items from List B,\n");
+    	
+    	System.out.println(s.size() == 0 ? "PASSED" : "FAILED\n\n");
+    	
+    	part6(s);
+    	
+    }
+    
+    public static void removeSomeMore(Set s){
+    	//4. Remove items in List A.
+    	s.remove("fungible");s.remove("tautology");s.remove("epiphany");s.remove("fisticuffs");
+    	s.remove("enigma");s.remove("alabaster");s.remove("debacle");s.remove("bogus");
+    	
+    	//5. Remove items in List C.
+    	s.remove("cacophony");s.remove("lollygag");s.remove("luscious");s.remove("yurt");
+    	s.remove("macabre");s.remove("soporific");s.remove("ergo");s.remove("pedantic");
+    }
+    public static void part3(Set s){
+    	
+    	//7. Check that "contains" returns "false" for each item in List A.
+    	System.out.println("Testing Set.contains() returns FALSE for each item in "+
+    			"List A: (Look for each line to say \"PASSED\".)");
+    	System.out.println("(List A: [fungible, tautology, epiphany, fisticuffs, "+
+    			"enigma, alabaster, debacle, bogus])\n");
+    	System.out.println("fungible: "+ (s.contains("fungible") ? "FAILED" : "PASSED"));
+    	System.out.println("tautology: "+ (s.contains("tautology") ? "FAILED" : "PASSED"));
+    	System.out.println("epiphany: "+ (s.contains("epiphany") ? "FAILED" : "PASSED"));
+    	part3_2(s);
+    	
+    	
+    }
+    public static void part3_2(Set s){
+    	System.out.println("fisticuffs: "+ (s.contains("fisticuffs") ? "FAILED" : "PASSED"));
+    	System.out.println("enigma: "+ (s.contains("enigma") ? "FAILED" : "PASSED"));
+    	System.out.println("alabaster: "+ (s.contains("alabaster") ? "FAILED" : "PASSED"));
+    	System.out.println("debacle: "+ (s.contains("debacle") ? "FAILED" : "PASSED"));
+    	System.out.println("bogus: "+ (s.contains("bogus") ? "FAILED" : "PASSED"));
+    }
+    public static void part4(Set s){
+    	//8. Check that "contains" returns "true" for each item in List B.
+    	
+    	System.out.println("\n\nTesting Set.contains() returns true for each item in List B: ");
+    	System.out.println("(List B: [heresy, bombastic, sentient, blitzkrieg,"+
+    			" infernal, euphoric, plethora, azure])\n");
+    	System.out.println("heresy: "+ (s.contains("heresy") ? "PASSED" : "FAILED"));
+    	System.out.println("bombastic: "+ (s.contains("bombastic") ? "PASSED" : "FAILED"));
+    	System.out.println("sentient: "+ (s.contains("sentient") ? "PASSED" : "FAILED"));
+    	part4_2(s);
+    }
+    public static void part4_2(Set s){
+    	System.out.println("blitzkrieg: "+ (s.contains("blitzkrieg") ? "PASSED" : "FAILED"));
+    	System.out.println("infernal: "+ (s.contains("infernal") ? "PASSED" : "FAILED"));
+    	System.out.println("euphoric: "+ (s.contains("euphoric") ? "PASSED" : "FAILED"));
+    	System.out.println("plethora: "+ (s.contains("plethora") ? "PASSED" : "FAILED"));
+    	System.out.println("azure: "+ (s.contains("azure") ? "PASSED" : "FAILED"));
+    }
+    public static void part5(Set s){
+    	//9. Remove items in List B.
+    	s.remove("heresy");s.remove("bombastic");s.remove("sentient");s.remove("blitzkrieg");
+    	s.remove("infernal");s.remove("euphoric");s.remove("plethora");s.remove("azure");
+    }
+    public static void part6(Set s){
+    	//11. Check that "contains" returns "false" for each item in List B.
+    	
+    	System.out.println("\n\nTesting Set.contains() returns false for each item in List B: ");
+    	System.out.println("(List B: [heresy, bombastic, sentient, blitzkrieg,"+
+    			" infernal, euphoric, plethora, azure])\n");
+    	System.out.println("heresy: "+ (s.contains("heresy") ? "FAILED" : "PASSED"));
+    	System.out.println("bombastic: "+ (s.contains("bombastic") ? "FAILED" : "PASSED"));
+    	System.out.println("sentient: "+ (s.contains("sentient") ? "FAILED" : "PASSED"));
+    	part6_2(s);
+    }
+    public static void part6_2(Set s){
+    	System.out.println("blitzkrieg: "+ (s.contains("blitzkrieg") ? "FAILED" : "PASSED"));
+    	System.out.println("infernal: "+ (s.contains("infernal") ? "FAILED" : "PASSED"));
+    	System.out.println("euphoric: "+ (s.contains("euphoric") ? "FAILED" : "PASSED"));
+    	System.out.println("plethora: "+ (s.contains("plethora") ? "FAILED" : "PASSED"));
+    	System.out.println("azure: "+ (s.contains("azure") ? "FAILED" : "PASSED"));
+    }
+}
+
+

@@ -1,0 +1,12 @@
+import java.io.PrintStream;
+
+
+public class PrinterImpl implements Printer {
+
+	@Override
+	public void print(Document doc, PrintStream out) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

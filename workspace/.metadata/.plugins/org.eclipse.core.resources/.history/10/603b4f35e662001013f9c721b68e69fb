@@ -1,0 +1,29 @@
+
+//package cs235.xml;
+
+
+public class Test {
+
+    /**
+     * Run tests on Text, Element, Document, Printer, and Parser objects.
+     */
+    public static void main(String[] args) {
+    	testTextInterface();
+
+    }
+    public static void testTextInterface(){
+    	//1. Make a Text object.
+    	Text t = Factory.createText("the string of text");
+    	
+    	//2. Check that 'getType' and 'getText' return the correct values.
+    	NodeType type = t.getType();
+    	String testText = t.getText();
+    	System.out.print("Testing if TextImpl.getText() returns the correct "+
+    			"text it was initialized with: ");
+    	System.out.println(t.getText().equals("the string of text")? "PASSED\n\n" : "FAILED\n\n");	
+    	
+    }
+
+}
+
+

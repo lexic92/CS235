@@ -1,0 +1,5 @@
+#Fri Apr 01 18:08:17 MDT 2011
+__DEFAULT__=false
+org.eclipse.sdk.Eclipse.master=true
+org.eclipse.help.ui.localSearch.master=true
+expression=color

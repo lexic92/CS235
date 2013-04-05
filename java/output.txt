@@ -1,0 +1,17 @@
+student
+ID
+NAME
+MAJOR
+2.0
+
+employee
+ID2
+NAME2
+OFFICE
+
+student
+ID3
+NAME3
+MAJOR2
+2.0
+

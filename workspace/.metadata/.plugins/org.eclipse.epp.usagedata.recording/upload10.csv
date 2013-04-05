@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.deved.antlride.ui,2.0.2.201004112039,"org.deved.antlride.ui",1286907259314
+started,bundle,org.eclipse.cdt.core,5.1.0.200906161748,"org.eclipse.cdt.core",1286907259314
+started,bundle,org.eclipse.cdt.ui,5.1.0.200906161748,"org.eclipse.cdt.ui",1286907259330
+started,bundle,org.eclipse.dltk.core,1.0.0.v20090617-1157,"org.eclipse.dltk.core",1286907259330
+started,bundle,org.eclipse.dltk.launching,1.0.0.v20090610-1638,"org.eclipse.dltk.launching",1286907259330
+started,bundle,org.eclipse.dltk.ui,1.0.0.v20090617-1521,"org.eclipse.dltk.ui",1286907259330
+started,bundle,org.eclipse.ecf.provider.xmpp,3.0.0.v20090616-0832,"org.eclipse.ecf.provider.xmpp",1286907259330
+started,bundle,org.eclipse.team.svn.core,0.7.8.I20090506-1500,"org.eclipse.team.svn.core",1286907259330
+started,bundle,org.eclipse.team.svn.mylyn,0.7.8.I20090506-1500,"org.eclipse.team.svn.mylyn",1286907259330
+started,bundle,org.eclipse.team.svn.ui,0.7.8.I20090506-1500,"org.eclipse.team.svn.ui",1286907259330
+started,bundle,org.tigris.subversion.subclipse.core,1.2.4,"org.tigris.subversion.subclipse.core",1286907259330
+started,bundle,org.tigris.subversion.subclipse.mylyn,2.0.0,"org.tigris.subversion.subclipse.mylyn",1286907259330
+started,bundle,org.tigris.subversion.subclipse.ui,1.2.4,"org.tigris.subversion.subclipse.ui",1286907259330
+os,sysinfo,,,"win32",1286907259330
+arch,sysinfo,,,"x86",1286907259330
+ws,sysinfo,,,"win32",1286907259330
+locale,sysinfo,,,"en_US",1286907259330
+processors,sysinfo,,,"8",1286907259330
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1286907259330
+java.runtime.version,sysinfo,,,"1.6.0_18-b07",1286907259330
+java.specification.name,sysinfo,,,"Java Platform API Specification",1286907259330
+java.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1286907259330
+java.specification.version,sysinfo,,,"1.6",1286907259330
+java.vendor,sysinfo,,,"Sun Microsystems Inc.",1286907259330
+java.version,sysinfo,,,"1.6.0_18",1286907259330

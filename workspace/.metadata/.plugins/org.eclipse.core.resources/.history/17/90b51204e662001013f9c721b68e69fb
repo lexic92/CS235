@@ -1,0 +1,93 @@
+
+public class TextImpl implements Text{
+	private String text;
+	
+	/**
+	 * COMPLETED
+	 * @param text
+	 */
+	public TextImpl(String text){
+		this.text = text;
+	}
+	
+	/**
+	 * COMPLETED
+	 */
+	@Override
+	public String getText() {
+		return text;
+	}
+
+	/**
+	 * COMPLETED
+	 */
+	@Override
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	
+	
+	
+	@Override
+	public NodeType getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getFirstChild() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getLastChild() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getNextSibling() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getPrevSibling() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void appendChild(Node newChild) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertChild(Node newChild, Node child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChild(Node child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void replaceChild(Node newChild, Node oldChild) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+}

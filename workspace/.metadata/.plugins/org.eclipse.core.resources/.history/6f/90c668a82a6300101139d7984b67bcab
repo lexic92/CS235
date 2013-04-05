@@ -1,0 +1,13 @@
+import java.io.IOException;
+import java.io.InputStream;
+
+
+public class ParserImpl implements Parser {
+
+	@Override
+	public Document parse(InputStream in) throws IOException, XMLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

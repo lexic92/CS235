@@ -1,0 +1,122 @@
+import java.io.PrintStream;
+
+
+public class PrinterImpl implements Printer {
+	/**
+     * Writes the document in XML format to the specified output stream.
+     * 
+     * @param doc the root of the document tree to be written
+     * @param out the output stream to which the document should be written
+     * @throws IllegalArgumentException if doc is null
+     * @throws IllegalArgumentException if out is null
+     */
+	@Override
+	public void print(Document doc, PrintStream out) {
+		if(doc == null || out == null){
+			throw new IllegalArgumentException();
+		}
+		printNode(doc, out); //Starts the recursion.
+		
+	}
+	
+
+	/**
+	 *Calls the appropriate print method depending on the node type.
+	 * If it's a document node, it doesn't print anything.
+	 * @param node the node to print out info about.
+	 */
+	public void printNode(Node node, PrintStream out){
+		if(node.getType() == NodeType.DOCUMENT_NODE){
+			printDoc((Document) node, out);
+		}
+		else if(node.getType() == NodeType.ELEMENT_NODE){
+			printElement((Element)node, out);
+		}
+		else if(node.getType() == NodeType.TEXT_NODE){
+			printText((Text)node, out);
+		}
+	}
+	/**
+	 * Complete
+	 * @param node
+	 * @param out
+	 */
+	public void printDoc(Document node, PrintStream out){
+		//Recursively print the children of this node.
+		Node child = node.getFirstChild();
+		while(child != null){
+			printNode(child, out);
+		}
+		
+		//CONTINUE RECURSION
+		printSibling(node, out);
+	}
+	/**
+	 * Complete
+	 * @param node
+	 * @param out
+	 */
+	public void printElement(Element node, PrintStream out){
+		//OPENING TAG
+		System.out.print("<" + node.getTagName());
+		//Print all the attributes
+		for(int i = 0; i < node.getAttributeCount(); i++){
+			System.out.print(" " + node.getAttributeName(i) + "=\"" + 
+					node.getAttributeValue(i) + "\"");
+		}
+		System.out.print(">");
+		
+		//MIDDLE
+		//Recursively print the children of this node before printing the
+		//closing tag.
+		Node child = node.getFirstChild();
+		while(child != null){
+			printNode(child, out);
+		}
+		
+		//CLOSING TAG
+		System.out.print("</" + node.getTagName() + ">");
+		
+		//CONTINUE RECURSION
+		printSibling(node, out);
+	}
+	
+	/**
+	 * Complete
+	 * @param node
+	 * @param out
+	 */
+	
+	public void printText(Text node, PrintStream out){
+		//NO OPENING TAG NOR CLOSING TAG
+		System.out.print(node.getText());
+		
+		//Recursively print the children of this node. Also indent.
+		Node child = node.getFirstChild();
+		while(child != null){;
+			printNode(child, out);
+		}
+		
+		//CONTINUE RECURSION
+		printSibling(node, out);
+	}
+	
+	public void printSibling(Node node, PrintStream out){
+		//PRINT Its sibling if it has one.
+		//Then each sibling will print its children too.
+		Node next = node.getNextSibling();
+		if(next != null){
+			printNode(next, out);
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

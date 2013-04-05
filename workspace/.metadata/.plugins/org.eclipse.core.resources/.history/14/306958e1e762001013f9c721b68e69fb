@@ -1,0 +1,58 @@
+
+//package cs235.xml;
+
+
+public class Test {
+
+    /**
+     * Run tests on Text, Element, Document, Printer, and Parser objects.
+     */
+    public static void main(String[] args) {
+    	testTextInterface();
+    	testElementInterface();
+    	
+    }
+    public static void testTextInterface(){
+    	//Test the 'Text' interface.
+    	System.out.println("\n-------------TESTING 'TEXT' INTERFACE-----------------\n");
+    	
+    	//1. Make a Text object.
+    	Text t = Factory.createText("the string of text");
+    	
+    	//2. Check that 'getType' and 'getText' return the correct values.
+    	System.out.println("Testing if TextImpl.getType() returns TokenType.TEXT_NODE:\n");
+    	System.out.println(t.getType() == NodeType.TEXT_NODE ? "PASSED\n\n" : "FAILED\n\n");	
+
+    	System.out.println("Testing if TextImpl.getText() returns the correct "+
+    			"text it was initialized with: \n");
+    	System.out.println(t.getText().equals("the string of text")? "PASSED\n\n" : "FAILED\n\n");	
+    	
+    	
+    	//3. Call 'setText' to change the data in the object.
+    	t.setText("Different text");
+    	
+    	//4. Check that 'getText' returns the correct value.
+    	System.out.println("Testing if TextImpl.getText() returns the correct "+
+		"text \n(Just called TextImpl.setText() with different text):\n");
+    	System.out.println(t.getText().equals("Different text")? "PASSED\n\n" : "FAILED\n\n");	
+
+    	
+    }
+    public static void testElementInterface(){
+    	//1. Make an 'Element' object.
+    	Element e = Factory.createElement("The tag name");
+    	
+    	//2. Check that 'getType' and 'getTagName' return the correct values.
+    	System.out.println("Testing if ElementImpl.getType() returns TokenType.ELEMENT_NODE:\n");
+    	System.out.println(e.getType() == NodeType.ELEMENT_NODE ? "PASSED\n\n" : "FAILED\n\n");	
+
+    	System.out.println("Testing if ElementImpl.getTagName() returns the correct "+
+    			"tag name it was initialized with: \n");
+    	System.out.println(e.getTagName().equals("The tag name")? "PASSED\n\n" : "FAILED\n\n");	
+    	
+    	
+    }
+
+}
+
+

@@ -1,0 +1,149 @@
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+
+
+public class NodeImpl implements Node {
+	Node parent;
+	Node nextSibling;
+	Node prevSibling;
+	
+	List childrenList;
+	public NodeImpl(){
+		childrenList = new LinkedList<NodeImpl>();
+	}
+	
+	/**
+	 * COMPLETED
+     * @return the type of this node (DOCUMENT_NODE, ELEMENT_NODE, or TEXT_NODE)
+     */
+	@Override
+	public NodeType getType() {
+		if (this instanceof DocumentImpl){
+			return NodeType.DOCUMENT_NODE;
+		}
+		else if (this instanceof ElementImpl){
+			return NodeType.ELEMENT_NODE;
+		}
+		else {
+			return NodeType.TEXT_NODE;
+		}
+	}
+	/**
+	 * COMPLETED
+     * @return the parent node of this node, or null if it has no parent
+     */
+	@Override
+	public Node getParent() {
+		return parent == null ? null : parent;
+	}
+
+	@Override
+	/**
+	 * COMPLETED
+     * @return the first child of this node, or null if it has no children
+     */
+	public Node getFirstChild() {
+		return (Node) (((LinkedList) childrenList).getFirst() == null ? 
+				null : ((LinkedList) childrenList).getFirst());
+	}
+	/**
+	 * COMPLETED
+     * @return the last child of this node, or null if it has no children
+     */
+	@Override
+	public Node getLastChild() {
+		return (Node) (((LinkedList) childrenList).getLast() == null ? 
+				null : ((LinkedList) childrenList).getLast());
+	}
+
+	@Override
+	public Node getNextSibling() {
+		return nextSibling;
+	}
+
+	@Override
+	public Node getPrevSibling() {
+		return prevSibling;
+	}
+	 /**
+	  * COMPLETED
+     * Appends a child to the target node's list of children.
+     * 
+     * @param newChild the new child node to be appended
+     * @throws IllegalArgumentException if newChild is null
+     */
+	@Override
+	public void appendChild(Node newChild) {
+		if(newChild == null){
+			throw new IllegalArgumentException();
+		}
+		childrenList.add(newChild);		
+	}
+	/**
+     * Inserts a new child node before (in front of) an existing child node.
+     * 
+     * @param newChild the new child node to be inserted
+     * @param child the child node before which the new node should be inserted
+     * @throws IllegalArgumentException if newChild is null
+     * @throws IllegalArgumentException if child is null
+     * @throws IllegalArgumentException if child is not a child of the target node
+     */
+	@Override
+	public void insertChild(Node newChild, Node child) {
+		if(newChild == null || child == null || !childrenList.contains(child)){
+			throw new IllegalArgumentException();
+		}
+		
+		child.
+		
+		
+		boolean found = false;
+		Iterator it = childrenList.iterator();
+		Node test;
+		int i; //Index of the node before which the new node should be inserted
+		
+		//Find the index of "child"
+		for(i = -1; i < childrenList.size() && !found; i++){
+			test = (Node) it.next();
+			if(test.equals(child)){
+				found = true;
+			}		
+		}
+		
+		childrenList.add(i+1, child);
+		
+		
+	}
+
+	@Override
+	public void removeChild(Node child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void replaceChild(Node newChild, Node oldChild) {
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * COMPLETED
+	 * One I made
+	 * @param newNextSibling
+	 */
+	public void setNextSibling(Node newNextSibling){
+		nextSibling = newNextSibling;
+	}
+	/**
+	 * COMPLETED
+	 * One I made
+	 * @param newNextSibling
+	 */
+	public void setPrevSibling(Node newPrevSibling){
+		prevSibling = newPrevSibling;
+	}
+
+}

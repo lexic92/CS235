@@ -1,0 +1,128 @@
+
+public class ElementImpl implements Element{
+	String tagName;
+	
+	/**
+	 * COMPLETED
+	 */
+	public ElementImpl(String tagName){
+		this.tagName = tagName;
+	}
+	
+	/**
+	 * COMPLETED
+	 */
+	@Override
+	public String getTagName() {
+		return tagName;
+	}
+	
+	/**
+	 * COMPLETED
+	 */
+	@Override
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
+	@Override
+	public String getAttributeValue(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setAttribute(String name, String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getAttributeCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getAttributeName(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAttributeValue(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public NodeType getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getFirstChild() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getLastChild() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getNextSibling() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getPrevSibling() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void appendChild(Node newChild) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertChild(Node newChild, Node child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChild(Node child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void replaceChild(Node newChild, Node oldChild) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+}

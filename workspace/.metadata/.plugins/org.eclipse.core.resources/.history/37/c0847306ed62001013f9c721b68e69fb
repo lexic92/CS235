@@ -1,0 +1,97 @@
+
+//package cs235.xml;
+
+
+public class Test {
+
+    /**
+     * Run tests on Text, Element, Document, Printer, and Parser objects.
+     */
+    public static void main(String[] args) {
+    	testTextInterface();
+    	testElementInterface();
+    	
+    }
+    public static void testTextInterface(){
+    	//Test the 'Text' interface.
+    	System.out.println("\n-------------TESTING 'TEXT' INTERFACE-----------------\n");
+    	
+    	//1. Make a Text object.
+    	Text t = Factory.createText("the string of text");
+    	
+    	//2. Check that 'getType' and 'getText' return the correct values.
+    	System.out.println("Testing if TextImpl.getType() returns TokenType.TEXT_NODE:\n");
+    	System.out.println(t.getType() == NodeType.TEXT_NODE ? "PASSED\n\n" : "FAILED\n\n");	
+
+    	System.out.println("Testing if TextImpl.getText() returns the correct "+
+    			"text it was initialized with: \n");
+    	System.out.println(t.getText().equals("the string of text")? "PASSED\n\n" : "FAILED\n\n");	
+    	
+    	
+    	//3. Call 'setText' to change the data in the object.
+    	t.setText("Different text");
+    	
+    	//4. Check that 'getText' returns the correct value.
+    	System.out.println("Testing if TextImpl.getText() returns the correct "+
+		"text \n(Just called TextImpl.setText() with different text):\n");
+    	System.out.println(t.getText().equals("Different text")? "PASSED\n\n" : "FAILED\n\n");	
+
+    	
+    }
+    public static void testElementInterface(){
+    	//1. Make an 'Element' object.
+    	Element e = Factory.createElement("The tag name");
+    	
+    	//2. Check that 'getType' and 'getTagName' return the correct values.
+    	System.out.println("Testing if ElementImpl.getType() returns TokenType.ELEMENT_NODE:\n");
+    	System.out.println(e.getType() == NodeType.ELEMENT_NODE ? "PASSED\n\n" : "FAILED\n\n");	
+
+    	System.out.println("Testing if ElementImpl.getTagName() returns the correct "+
+    			"tag name it was initialized with: \n");
+    	System.out.println(e.getTagName().equals("The tag name")? "PASSED\n\n" : "FAILED\n\n");	
+    	
+    	
+    	//3. Call 'setTagName' and 'setAttribute' to change the data in the object. 
+    	e.setTagName("New tag name");
+    	e.setAttribute("Attribute name", "Attribute value");
+    	
+    	//4. Check that 'getTagName', 'getAttributeCount', 'getAttributeValue', and
+    	//'getAttributeName' return the correct values.
+    	System.out.println("--- Just called ElementImpl.setTagName() and ElementImpl."+
+    			"setAttribute() ---\n");
+    	
+    	//getTagName
+    	System.out.println("Testing if ElementImpl.getTagName() returns the correct "+
+		"tag name it was changed to: \n");
+    	System.out.println(e.getTagName().equals("New tag name")? "PASSED\n\n" : "FAILED\n\n");	
+
+    	//getAttributeCount = 1?
+    	System.out.println("Check that ElementImpl.getAttributeCount() returns 1 "+
+		"(since it just added an attribute): \n");
+    	System.out.println(e.getAttributeCount() == 1 ? "PASSED\n\n" : "FAILED\n\n");	
+
+    	//getAttributeValue(string)
+    	System.out.println("Check that ElementImpl.getAttributeValue(\"Attribute name\") "+
+    			"returns the correct value:");
+    	System.out.println(e.getAttributeValue("Attribute name").equals("Attribute value") ? 
+    			"PASSED\n\n" : "FAILED\n\n");	
+    	
+    	//getAttributeValue(int)
+    	System.out.println("Check that ElementImpl.getAttributeValue(\"index [an int]\") "+
+		"returns the correct value:");
+    	System.out.println(e.getAttributeValue(1).equals("Attribute value") ? 
+    			"PASSED\n\n" : "FAILED\n\n");	
+
+    	//getAttributeName(int)
+    	System.out.println("Check that ElementImpl.getAttributeName(\"index [an int]\") "+
+		"returns the correct attribute name:");
+    	System.out.println(e.getAttributeName(1).equals("Attribute name") ? 
+    			"PASSED\n\n" : "FAILED\n\n");
+    	
+    	
+
+    }
+
+}
+
+

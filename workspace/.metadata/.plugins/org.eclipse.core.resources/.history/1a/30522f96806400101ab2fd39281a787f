@@ -1,0 +1,39 @@
+
+public class TextImpl extends NodeImpl implements Text {
+	private String text;
+	
+	/**
+	 * COMPLETED
+	 * @param text
+	 */
+	public TextImpl(String text){
+		this.text = text;
+	}
+	
+	/**
+	 * COMPLETED
+	 */
+	@Override
+	public String getText() {
+		return text;
+	}
+
+	/**
+	 * COMPLETED
+	 */
+	@Override
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	
+	@Override
+	public NodeType getType() {
+		// TODO Auto-generated method stub
+		return NodeType.TEXT_NODE;
+	}
+	
+	
+	
+
+}

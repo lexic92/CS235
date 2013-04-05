@@ -1,0 +1,247 @@
+package hash;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+
+public class SetImpl implements java.util.Set {
+	private int numElements;
+	private int hash_table_array_size;
+	private LinkedList[] array;
+	private int loadFactor; // "N/T"  N: numElements. T: hash_table_array_size.
+
+	/**
+	 * Constructor. Initial hash table size is 1, and the
+	 * rest of the info is set relative to that (and relative
+	 * to this set being empty).
+	 */
+	SetImpl(){
+		
+		numElements = 0;
+		hash_table_array_size = 1;
+		array = new LinkedList[1]; //"2. Initial size of hash table must be 1."
+		loadFactor = 0;
+		
+	}
+	
+	
+	/**  
+	 * INCOMPLETE
+	 * 
+	 * Insert e.
+	 *
+	 * @return true if this set did not already contain the specified element.
+	 */
+	@Override
+	public boolean add(Object e) {
+		//If the object is null (and this set doesn't take nulls), throw exception.
+		if(e == null){
+			throw new NullPointerException();
+		}
+		//If the class of e prevents it from being added to this set, throw exception.
+		if(!(e instanceof Object)){  //Change to whatever class you want later on
+			throw new ClassCastException();
+		}
+		//If this element is already present, return false.
+		if(this.contains(e)){
+			return false;
+		}
+
+		//----------THE SPECIFIC "ADD" IMPLEMENTATION BEGINS HERE------------------------
+		
+		//If the size has reached the maximum, then leave it alone (don't want it to accidentally
+		//go to Zero or something!)
+		if(!(numElements == Integer.MAX_VALUE)){
+			numElements++;
+		}
+		
+		//Update load factor (BASED ON NEW NUMBER OF ELEMENTS)
+		loadFactor = numElements/hash_table_array_size;
+		
+		//If the added item caused the load factor to exceed 1.0, (AKA then rehash into a new hash table
+		//of array size 1 * old_hash_table_array_size + 1.
+		if(loadFactor > 1){
+			//Update array_size while I still have access to the "old" table size.
+			hash_table_array_size = 2 * hash_table_array_size + 1;
+			
+			//Now, actually re-hash into a new table. IMPLEMENT HERE!!!!!!!
+			//
+			//
+			//
+			//
+			
+			//Update load factor again (in case it's used in other methods).
+			loadFactor = numElements/hash_table_array_size;
+		}
+		
+		//Now, add it to the table (whether it was rehashed or not).
+		int index = Math.abs(e.hashCode() % hash_table_array_size); //Compute valid hash code.
+		((LinkedList)array[index]).add(e); //Add the object to the end of the LinkedList at this hash code index.
+	
+		return true;
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	/**
+	 * INCOMPLETE
+	 * 
+	 * Returns true if this set contains the object. 
+	 * More formally, returns true if and only if this set
+	 * contains an element e such that (o == null ? e==null : o.equals(e)).
+	 * 
+	 * @param o the tested object (to see if it's contained)
+	 * @return true if this set contains "o"
+	 */
+	@Override
+	public boolean contains(Object o) {
+		//If the find method returns null, then it is not contained.
+		//If the find method returns a node, then it is contained (true).
+		return false;//IMPLEMENT HERE! EXAMPLE: find(o, root) == null ? false : true;
+	}
+
+
+
+
+
+
+	/**
+	 * COMPLETED
+	 * 
+	 * Returns the number of elements
+	 * in this set.
+	 * If this set contains more than Integer.MAX_VALUE elements,
+	 * returns Integer.MAX_VALUE.
+	 */
+	@Override
+	public int size() {
+		//Integer.MAX_VALUE thing is taken care of in "add" method.
+		return numElements;
+	}
+
+
+
+
+
+
+
+
+
+
+	/**
+	 * COMPLETED
+	 * 
+	 * Removes all of the elements from this set.
+	 */
+	@Override
+	public void clear() {
+		//The exact same as the constructor.
+		numElements = 0;
+		hash_table_array_size = 1;
+		array = new LinkedList[1]; //"2. Initial size of hash table must be 1."
+		loadFactor = 0;
+		
+	}
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public boolean remove(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public Iterator iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public boolean containsAll(Collection c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object[] toArray() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object[] toArray(Object[] a) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean addAll(Collection c) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean retainAll(Collection c) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean removeAll(Collection c) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+}

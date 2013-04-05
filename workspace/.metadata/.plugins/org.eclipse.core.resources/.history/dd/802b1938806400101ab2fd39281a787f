@@ -1,0 +1,115 @@
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Stack;
+
+import cs235.xml.TokenizerImpl;
+
+
+public class ParserImpl implements Parser {
+	Tokenizer t;
+	Document doc;
+	Node current;
+	Stack<String> stack = new Stack<String>();
+	/**
+	 * CONSTRUCTOR
+	 */
+	public ParserImpl(){
+		doc = new DocumentImpl();
+	}
+	/**
+     * Parses the XML document contained in the specified input stream
+     * and returns a document tree that represents the document.
+     * 
+     * @param in an input stream containing an XML document
+     * @return the root node of document tree
+     * @throws IllegalArgumentException if in is null
+     * @throws IOException if an input error occurs while parsing the XML document
+     * @throws XMLException if the XML document being parsed is not in valid XML format
+     */
+	@Override
+	public Document parse(InputStream in) throws IOException, XMLException {
+		if(in == null){
+			throw new IllegalArgumentException();
+		}
+		//Initialize stuff
+		t = (Tokenizer) new TokenizerImpl(in);
+		current = doc;
+		
+		//Start recursive calls
+		processNextToken();
+		
+		//If it reaches this point, assume that in processNextToken(),
+		//currentToken == TokenType.EOF
+		return doc;
+	}
+	/**
+	 * @throws XMLException 
+	 *
+	 */
+	public void processNextToken() throws XMLException{
+		TokenType currentToken = t.getTokenType();	
+		//This means it is an element, not text.
+		if(currentToken == TokenType.START_TAG){
+			element();
+		}
+		if(currentToken == TokenType.TEXT){
+			text();
+		}
+		if(currentToken == TokenType.END_TAG){
+			endTag();
+		}
+		
+	}
+	/**
+	 * INCOMPLETE
+	 */
+	public void element(){
+		//When a 'START_TAG' is read, create a new 'Element' node,
+		//[Make an element impl with the tag name.]
+		String startTag = t.getTagName();
+		Element e = new ElementImpl(startTag);
+		
+		//Add the attributes to e.
+		int numAttributes = t.getAttributeCount();
+		for(int i = 0; i < numAttributes; i++){
+			e.setAttribute(t.getAttributeName(i), t.getAttributeValue(i));
+		}
+		//append it as a child of the current node,
+		//[Works if current is "Document."]
+		current.appendChild(e);
+		
+		//and change the current node to be the new 'Element' node. 
+		current = e;
+		
+		//ALSO: Add it's start tag to the stack.
+		stack.add(startTag);
+	}
+	/**
+	 * INCOMPLETE
+	 */
+	public void text(){
+		//When a 'TEXT' token is read, create a new 'Text' node,
+		//]Make a text impl with the text.]
+		Text textNode = new TextImpl(t.getText());
+		
+		//and append it as a child of the current node.
+		current.appendChild(textNode);
+	}
+	/**
+	 * INCOMPLETE
+	 * @throws XMLException 
+	 */
+	public void endTag() throws XMLException{
+		//When an 'END_TAG' is read, check for balanced tags,
+		String endTag = t.getTagName();
+		
+		//The most recently added start tag should be the same as the end tag.
+		if(!stack.pop().equals(endTag)){
+			throw new XMLException();
+		}
+		
+		//and change the current node to be the parent of the current node. 
+		current = current.getParent();
+	}
+
+}
